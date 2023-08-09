@@ -145,7 +145,6 @@ $(function () {
             $backTop.slideDown(300);
         }
     }
-
     	
 	$(".nav-menu>li").hover(function(){
 		$(this).children('ul').stop(true,true).show();
