@@ -466,21 +466,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-08-10
+                    2023-08-11
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    3.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    14 分
                 </div>
                 
 
@@ -753,16 +753,105 @@ cout<span class="token operator">&lt;&lt;</span>sum<span class="token punctuatio
 <p>而欧拉筛法保证了每一个合数都被其最小质因子筛去，保证不会重复筛除。故遍历一次就好，时间复杂度为O(n)。（欧拉我神！）</p>
 <p>算法步骤视频-&gt;<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LR4y1Z7pm/?spm_id_from=333.337.search-card.all.click&amp;vd_source=664429be53bbd81b6ef5e987e4b5c17a">传送门</a></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>N<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>mark<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment">//存放素数</span>
-            primes<span class="token punctuation">[</span><span class="token operator">++</span>pp<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span>
-            <span class="token operator">++</span>sum<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>mark<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment">//存放素数</span>
+        primes<span class="token punctuation">[</span><span class="token operator">++</span>pp<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span>
+        <span class="token operator">++</span>sum<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">*</span>i<span class="token operator">&lt;=</span>N<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//保证数组不会越界</span>
+        mark<span class="token punctuation">[</span>primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">*</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">//最小质因子筛合数</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">%</span>primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+cout<span class="token operator">&lt;&lt;</span>sum<span class="token punctuation">;</span>  <span class="token comment">//输出总数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="快速幂算法"><a href="#快速幂算法" class="headerlink" title="快速幂算法"></a>快速幂算法</h2><p>在计算a的b次方的时候，一种朴素的算法是利用for循环进行b次操作，这样子的时间复杂度是O(b)，在实际操作中复杂度还是很高。而数学性质告诉我们，a的b次方可以转化为a*a的b/2次方，所以我们不妨增大a的值，减少b的值来达到缩减计算速度的效果。快速幂算法时间复杂度是O(logb)。</p>
+<h3 id="普通版"><a href="#普通版" class="headerlink" title="普通版"></a>普通版</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">typedef</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ull<span class="token punctuation">;</span>
+ull a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>p<span class="token punctuation">;</span>
+ull <span class="token function">quick_pow</span><span class="token punctuation">(</span>ull a<span class="token punctuation">,</span> ull b<span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment">//b是指数</span>
+    ull ans<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">%</span><span class="token number">2</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">//指数是偶数</span>
+            b<span class="token operator">/=</span><span class="token number">2</span><span class="token punctuation">;</span>
+            a<span class="token operator">=</span>a<span class="token operator">*</span>a<span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">*</span>i<span class="token operator">&lt;=</span>N<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//保证数组不会越界</span>
-            mark<span class="token punctuation">[</span>primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">*</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">//最小质因子筛合数</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">%</span>primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>  <span class="token comment">//指数是奇数</span>
+            <span class="token operator">--</span>b<span class="token punctuation">;</span>
+            ans<span class="token operator">=</span>ans<span class="token operator">*</span>a<span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
-    cout<span class="token operator">&lt;&lt;</span>sum<span class="token punctuation">;</span>  <span class="token comment">//输出总数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>利用位运算可以简化操作，其中，奇偶性可以通过&amp;1来判断，除以2可以通过&gt;&gt;1来进行。</p>
+<h3 id="优化版"><a href="#优化版" class="headerlink" title="优化版"></a>优化版</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ull <span class="token function">quick_pow</span><span class="token punctuation">(</span>ull a<span class="token punctuation">,</span> ull b<span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment">//b是指数</span>
+    ull ans<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span> ans<span class="token operator">=</span>ans<span class="token operator">*</span>a<span class="token punctuation">;</span><span class="token comment">//奇数</span>
+        b<span class="token operator">&gt;&gt;=</span><span class="token number">1</span><span class="token punctuation">;</span>  <span class="token comment">//b除以2</span>
+        a<span class="token operator">=</span>a<span class="token operator">*</span>a<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="模运算"><a href="#模运算" class="headerlink" title="模运算"></a>模运算</h3><p>有些时候需要进行模运算操作，例如一道经典的题目就是让我们求a^b mod p的值，我们利用求余运算的运算性质 a*b mod p = (a mod p * b mod p) mod p 来进行计算即可。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ull <span class="token function">quick_pow</span><span class="token punctuation">(</span>ull a<span class="token punctuation">,</span> ull b<span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment">//b是指数</span>
+    ull ans<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span> ans<span class="token operator">=</span>ans<span class="token operator">*</span>a<span class="token operator">%</span>p<span class="token punctuation">;</span><span class="token comment">//奇数</span>
+        b<span class="token operator">&gt;&gt;=</span><span class="token number">1</span><span class="token punctuation">;</span>  <span class="token comment">//b除以2</span>
+        a<span class="token operator">=</span>a<span class="token operator">*</span>a<span class="token operator">%</span>p<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> ans<span class="token operator">%</span>p<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="负进制转换"><a href="#负进制转换" class="headerlink" title="负进制转换"></a>负进制转换</h2><p>一般情况下的10进制转2进制我们是采用短除法，而倘若10进制转-2进制的时候我们需要注意，因为我们需要除以-2的缘故，导致了余数可能出现负数。例如 -15 / -2 = 7 …… -1，进制转换要求我们余数不能为负数，所以当<mark>余数出现负数的时候，我们直接让商+1</mark>，即 -15 / -2 = 8 …… 1，这样就可以满足要求。当然了，这里空白太小，写不下相对应的数学证明。（<del>实际上就是我找不到，找到了估计也看不懂</del>）</p>
+<p>直接上代码，<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1017">洛谷P1017</a></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> ans<span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token number">21</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> n<span class="token punctuation">,</span>r<span class="token punctuation">,</span>len<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    cin<span class="token operator">&gt;&gt;</span>n<span class="token operator">&gt;&gt;</span>r<span class="token punctuation">;</span>
+    cout<span class="token operator">&lt;&lt;</span>n<span class="token operator">&lt;&lt;</span><span class="token string">"="</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">//10进制转换为r进制</span>
+        <span class="token keyword">int</span> tmp1<span class="token operator">=</span>n<span class="token operator">%</span>r<span class="token punctuation">,</span>tmp2<span class="token operator">=</span>n<span class="token operator">/</span>r<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>tmp1<span class="token operator">&lt;</span><span class="token number">0</span><span class="token punctuation">)</span> tmp2<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token comment">//余数小于0，商加1</span>
+        ans<span class="token punctuation">[</span>len<span class="token operator">++</span><span class="token punctuation">]</span><span class="token operator">=</span>n<span class="token operator">-</span>r<span class="token operator">*</span>tmp2<span class="token punctuation">;</span>
+        n<span class="token operator">=</span>tmp2<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&gt;=</span><span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">--</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&gt;=</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            cout<span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token char">'A'</span><span class="token operator">+</span>ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//特殊处理16进制</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        cout<span class="token operator">&lt;&lt;</span>ans<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    cout<span class="token operator">&lt;&lt;</span><span class="token string">"(base"</span><span class="token operator">&lt;&lt;</span>r<span class="token operator">&lt;&lt;</span><span class="token string">")"</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="组合数求解方法"><a href="#组合数求解方法" class="headerlink" title="组合数求解方法"></a>组合数求解方法</h2><p>先上公式</p>
+<p><img src="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/Comnum.png"></p>
+<p>所以，我们可以使用动态规划来求解组合数，直接上代码。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//初始化</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">&lt;</span>i<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>观察到每一行的组合数都只需要用到上一行组合数的数值，所以可以进行状态压缩，注意<mark>倒序处理</mark>。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span> j<span class="token operator">&gt;=</span><span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">--</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">//倒序处理</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">==</span>i<span class="token operator">||</span>j<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span> dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="卡特兰-Catalan-数"><a href="#卡特兰-Catalan-数" class="headerlink" title="卡特兰(Catalan)数"></a>卡特兰(Catalan)数</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1m44y1A7aK/?spm_id_from=333.337.search-card.all.click&amp;vd_source=664429be53bbd81b6ef5e987e4b5c17a">讲解视频</a></p>
 
                 
             </div>
@@ -1181,7 +1270,7 @@ cout<span class="token operator">&lt;&lt;</span>sum<span class="token punctuatio
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">8.3k</span>&nbsp;字
+                class="white-color">9.1k</span>&nbsp;字
             
             
             
