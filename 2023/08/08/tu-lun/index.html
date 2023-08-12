@@ -470,7 +470,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-08-08
+                    2023-08-12
                 </div>
                 
 
@@ -507,7 +507,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="图论算法"><a href="#图论算法" class="headerlink" title="图论算法"></a>图论算法</h1><h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><p>时间复杂度O(n+m),空间复杂度O(n) n为顶点数，m为边数</p>
+                <h1 id="图论算法"><a href="#图论算法" class="headerlink" title="图论算法"></a>图论算法</h1><h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><p>时间复杂度O（n+m）,空间复杂度O（n） n为顶点数，m为边数</p>
 <p>用途：</p>
 <ol>
 <li><p>计算工序最短用时（经典拓扑+dp）</p>
@@ -517,7 +517,7 @@
 <li><p>分级（排序、分层）</p>
 </li>
 </ol>
-<p>计算工序（洛谷P1113杂务）:</p>
+<p>计算工序（<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1113">洛谷P1113杂务</a>）:</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> n<span class="token punctuation">,</span>x<span class="token punctuation">,</span>index<span class="token punctuation">,</span>ans<span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> maxn<span class="token operator">=</span><span class="token number">10005</span><span class="token punctuation">;</span>
 vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> G<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>    <span class="token comment">//邻接链表存图</span>
@@ -561,8 +561,8 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
 
 <p>DAG判环：只需要新建一个cnt变量来记录队列中pop出来的顶点的个数，设总顶点数为N，若cnt==N，则表明无环，若cnt!=N，则表示有环。</p>
 <h3 id="拓扑排序的稳定性"><a href="#拓扑排序的稳定性" class="headerlink" title="拓扑排序的稳定性"></a>拓扑排序的稳定性</h3><p>拓扑排序时，若每一次入队的顶点数量均为1，则代表拓扑排序的结果只有一个，排序是稳定的；若每一次入队的顶点的数量不为1，则表示同一阶段有多个入度为0的顶点，这几个顶点的顺序是不固定的，故排序是不稳定的。<br>题目中若对排序有较严格要求，需要特别注意拓扑排序的稳定性。</p>
-<h2 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h2><p>使用优先队列优化后时间复杂度O(mlogn)，空间复杂度O(n) n为顶点数，m为边数，该算法用于求解<mark>单源最短路</mark>，条件为图中<mark>不存在负权值</mark>的边。</p>
-<p>算法模板（洛谷P4779）</p>
+<h2 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h2><p>使用优先队列优化后时间复杂度O（mlogn），空间复杂度O（n） n为顶点数，m为边数，该算法用于求解<mark>单源最短路</mark>，条件为图中<mark>不存在负权值</mark>的边。</p>
+<p>算法模板（<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4779">洛谷P4779</a>）</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> n<span class="token punctuation">,</span>m<span class="token punctuation">,</span>s<span class="token punctuation">,</span>u<span class="token punctuation">,</span>v<span class="token punctuation">,</span>w<span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> maxn<span class="token operator">=</span><span class="token number">100005</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> INF<span class="token operator">=</span><span class="token number">0x3f3f3f3f</span><span class="token punctuation">;</span>
@@ -606,7 +606,7 @@ vector<span class="token operator">&lt;</span>node<span class="token operator">&
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h2><p>时间复杂度O(n^3)，空间复杂度O(n^2)<br>限制条件<br>该算法用于求<mark>任意两点</mark>之间的最短路径，也可以来求解<mark>一个点是否能到达另一个点</mark>。dis[][]数组用于存图。算法核心在于中转站的选择，意为<mark>在前v个中转站被允许参与中转的情况下</mark>，任意两点可以到达的最短路径，<mark>枚举中转站</mark>的时候也可以用来<mark>判断该点是否位于最短路径当中</mark>。注意先初始化dis[][]为INF。</p>
+<h2 id="Floyd算法"><a href="#Floyd算法" class="headerlink" title="Floyd算法"></a>Floyd算法</h2><p>时间复杂度O（n^3），空间复杂度O（n^2）<br>限制条件<br>该算法用于求<mark>任意两点</mark>之间的最短路径，也可以来求解<mark>一个点是否能到达另一个点</mark>。dis[][]数组用于存图。算法核心在于中转站的选择，意为<mark>在前v个中转站被允许参与中转的情况下</mark>，任意两点可以到达的最短路径，<mark>枚举中转站</mark>的时候也可以用来<mark>判断该点是否位于最短路径当中</mark>。注意先初始化dis[][]为INF。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         cin<span class="token operator">&gt;&gt;</span>dis<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -638,7 +638,7 @@ vector<span class="token operator">&lt;</span>node<span class="token operator">&
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>Floyd算法的时间复杂度较高，所允许容纳的节点并不多，可以直接使用邻接矩阵存储，当题目顶点数量n&lt;=100时，可以考虑使用Floyd。</p>
-<h2 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h2><p>堆优化后时间复杂度O(mlogn)，空间复杂度O(n)，n为顶点数，m为边数 <mark>Prim算法</mark>在<mark>稠密图</mark>上的表现情况比Kruskal优。</p>
+<h2 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h2><p>堆优化后时间复杂度O（mlogn），空间复杂度O（n），n为顶点数，m为边数 <mark>Prim算法</mark>在<mark>稠密图</mark>上的表现情况比Kruskal优。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> maxn<span class="token operator">=</span><span class="token number">5005</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> INF<span class="token operator">=</span><span class="token number">0x3f3f3f3f</span><span class="token punctuation">;</span>
 <span class="token keyword">struct</span> <span class="token class-name">node</span><span class="token punctuation">{</span>
@@ -683,7 +683,7 @@ vector<span class="token operator">&lt;</span>node<span class="token operator">&
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>非连通图的特判可以直接在dis数组中查找是否有INF，以此来判断该图是否连通。</p>
-<h2 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h2><p>时间复杂度O(mlogm)，空间复杂度O(n)，n为顶点数，m为边数 <mark>Kruskal</mark>在<mark>稀疏图</mark>上的表现情况比Prim优。</p>
+<h2 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h2><p>时间复杂度O（mlogm），空间复杂度O（n），n为顶点数，m为边数 <mark>Kruskal</mark>在<mark>稀疏图</mark>上的表现情况比Prim优。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> maxn<span class="token operator">=</span><span class="token number">5005</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> INF<span class="token operator">=</span><span class="token number">0x3f3f3f3f</span><span class="token punctuation">;</span>
 <span class="token keyword">struct</span> <span class="token class-name">edge</span><span class="token punctuation">{</span>    <span class="token comment">//创建边结构体</span>
@@ -724,7 +724,7 @@ vector<span class="token operator">&lt;</span>edge<span class="token operator">&
 <p>kruskal中，因为边添加的时候是递增的，只要边能连接得上并且find_father可以保证两个点的father一样的话，则证明加入的这条边是最大值。<br>如果各顶点自己也有权值的话，可以<mark>利用for循环给每一个顶点加上一条边&lt;0,i&gt;，权重为顶点i的自身权重</mark>。 </p>
 <p><mark>正难则反</mark>，查并集没有删边操作，花最小代价删边等同于花最大代价建边。</p>
 <h2 id="Hierholzer算法"><a href="#Hierholzer算法" class="headerlink" title="Hierholzer算法"></a>Hierholzer算法</h2><p>又称插入回路法，用于求解欧拉路和欧拉路径。</p>
-<p>时间复杂度O(n+m)，空间复杂度O(n)，n为顶点数，m为边数。</p>
+<p>时间复杂度O（n+m），空间复杂度O（n），n为顶点数，m为边数。</p>
 <p>求解欧拉路的时候需要提前判明该图是否存在欧拉路。判定条件如下：</p>
 <p>有向图：</p>
 <ul>
@@ -1221,7 +1221,7 @@ stack<span class="token operator">&lt;</span><span class="token keyword">int</sp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">9.1k</span>&nbsp;字
+                class="white-color">9.8k</span>&nbsp;字
             
             
             
