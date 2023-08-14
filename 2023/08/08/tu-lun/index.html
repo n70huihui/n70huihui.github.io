@@ -470,7 +470,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-08-12
+                    2023-08-14
                 </div>
                 
 
@@ -561,7 +561,7 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
 
 <p>DAG判环：只需要新建一个cnt变量来记录队列中pop出来的顶点的个数，设总顶点数为N，若cnt==N，则表明无环，若cnt!=N，则表示有环。</p>
 <h3 id="拓扑排序的稳定性"><a href="#拓扑排序的稳定性" class="headerlink" title="拓扑排序的稳定性"></a>拓扑排序的稳定性</h3><p>拓扑排序时，若每一次入队的顶点数量均为1，则代表拓扑排序的结果只有一个，排序是稳定的；若每一次入队的顶点的数量不为1，则表示同一阶段有多个入度为0的顶点，这几个顶点的顺序是不固定的，故排序是不稳定的。<br>题目中若对排序有较严格要求，需要特别注意拓扑排序的稳定性。</p>
-<h2 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h2><p>使用优先队列优化后时间复杂度O（mlogn），空间复杂度O（n） n为顶点数，m为边数，该算法用于求解<mark>单源最短路</mark>，条件为图中<mark>不存在负权值</mark>的边。</p>
+<h2 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h2><p>使用优先队列优化后时间复杂度O（mlogn），空间复杂度O（n） n为顶点数，m为边数，该算法用于求解<mark>单源最短路</mark>，条件为图中<mark>不存在负权值</mark>的边。各个点到1的最短路径就是<mark>反向建图</mark>后1到各个点的最短路径。</p>
 <p>算法模板（<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4779">洛谷P4779</a>）</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> n<span class="token punctuation">,</span>m<span class="token punctuation">,</span>s<span class="token punctuation">,</span>u<span class="token punctuation">,</span>v<span class="token punctuation">,</span>w<span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> maxn<span class="token operator">=</span><span class="token number">100005</span><span class="token punctuation">;</span>
