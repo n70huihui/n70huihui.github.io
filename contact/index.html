@@ -103,7 +103,7 @@
             <div class="brand-logo">
                 <a href="/" class="waves-effect waves-light">
                     
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    <img src="/medias/loading.gif" data-original="/medias/logo.png" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span">热心市民灰灰个人博客</span>
                 </a>
@@ -202,7 +202,7 @@
 
     <div class="mobile-head bg-color">
         
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        <img src="/medias/loading.gif" data-original="/medias/logo.png" class="logo-img circle responsive-img">
         
         <div class="logo-name">热心市民灰灰个人博客</div>
         <div class="logo-desc">
@@ -360,7 +360,17 @@
 <p>如果你也想搭建一个自己的博客，你可以参考一下上面所示的链接。</p>
 <p>搭建博客还是一件比较麻烦的事情，假设你想让你的页面更丰富，所需的功能也自然更多，搭建的难度也自然更大。当你在搭建过程中碰到困难的时候，也请不要轻言放弃！</p>
 <p>PS：博客的主题的背景图和个人博客简介一文的主题背景图作者为<a target="_blank" rel="noopener" href="https://space.bilibili.com/73000956">唏嘘的星辰</a></p>
-<h1 id="博客更新记录"><a href="#博客更新记录" class="headerlink" title="博客更新记录"></a>博客更新记录</h1><h2 id="2023"><a href="#2023" class="headerlink" title="2023"></a>2023</h2><h3 id="2023-8-16"><a href="#2023-8-16" class="headerlink" title="2023.8.16"></a>2023.8.16</h3><ul>
+<h1 id="博客更新记录"><a href="#博客更新记录" class="headerlink" title="博客更新记录"></a>博客更新记录</h1><h2 id="2023"><a href="#2023" class="headerlink" title="2023"></a>2023</h2><h3 id="2023-8-17"><a href="#2023-8-17" class="headerlink" title="2023.8.17"></a>2023.8.17</h3><ul>
+<li><p>更新了图片懒加载，优化网站加载图片的速度</p>
+</li>
+<li><p>优化了博客字体的屏幕自适应</p>
+</li>
+<li><p>更新了友情链接</p>
+</li>
+<li><p>更改了博客首页的部分文字显示</p>
+</li>
+</ul>
+<h3 id="2023-8-16"><a href="#2023-8-16" class="headerlink" title="2023.8.16"></a>2023.8.16</h3><ul>
 <li><p>《数学》一文更新了幻方</p>
 </li>
 <li><p>修改了博客更新记录的目录结构</p>
@@ -777,6 +787,19 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-</body>
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,c=(r.imageLazyLoadSetting.preloadRatio,n());function n(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=n());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight+240||document.documentElement.clientHeight+240)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),r.addEventListener("resize",a),r.addEventListener("orientationchange",a)}(this);</script></body>
 
 </html>

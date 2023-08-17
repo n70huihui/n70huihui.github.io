@@ -103,7 +103,7 @@
             <div class="brand-logo">
                 <a href="/" class="waves-effect waves-light">
                     
-                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    <img src="/medias/loading.gif" data-original="/medias/logo.png" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span">热心市民灰灰个人博客</span>
                 </a>
@@ -202,7 +202,7 @@
 
     <div class="mobile-head bg-color">
         
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        <img src="/medias/loading.gif" data-original="/medias/logo.png" class="logo-img circle responsive-img">
         
         <div class="logo-name">热心市民灰灰个人博客</div>
         <div class="logo-desc">
@@ -508,9 +508,9 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="线性结构"><a href="#线性结构" class="headerlink" title="线性结构"></a>线性结构</h1><h2 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h2><h3 id="最大的矩形-CCF201312-3"><a href="#最大的矩形-CCF201312-3" class="headerlink" title="最大的矩形 CCF201312-3"></a>最大的矩形 CCF201312-3</h3><h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>在横轴上放了n个相邻的矩形，每个矩形的宽度是1，而第i（1 ≤ i ≤ n）个矩形的高度是hi。这n个矩形构成了一个直方图。例如，下图中六个矩形的高度就分别是3, 1, 6, 5, 2, 3</p>
-<p><img src="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/CCF2013123(1).png"></p>
+<p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/CCF2013123(1).png"></p>
 <p>请找出能放在给定直方图里面积最大的矩形，它的边要与坐标轴平行。对于上面给出的例子，最大矩形如下图所示的阴影部分，面积是10。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/CCF2013123(2).png"></p>
+<p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/CCF2013123(2).png"></p>
 <h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含一个整数n，即矩形的数量(1 ≤ n ≤ 1000)。<br>第二行包含n 个整数h1, h2, … , hn，相邻的数之间由空格分隔。(1 ≤ hi&nbsp;≤ 10000)。hi是第i个矩形的高度。</p>
 <h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>输出一行，包含一个整数，即给定直方图内的最大矩形的面积。</p>
 <h4 id="样例输入"><a href="#样例输入" class="headerlink" title="样例输入"></a>样例输入</h4><p>6<br>3 1 6 5 2 3</p>
@@ -763,7 +763,7 @@ stack<span class="token operator">&lt;</span><span class="token keyword">double<
                 <a href="/2023/08/09/dong-tai-gui-hua/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/dp.jpg" class="responsive-img" alt="动态规划">
+                        <img src="/medias/loading.gif" data-original="/medias/featureimages/dp.jpg" class="responsive-img" alt="动态规划">
                         
                         <span class="card-title">动态规划</span>
                     </div>
@@ -815,7 +815,7 @@ stack<span class="token operator">&lt;</span><span class="token keyword">double<
                 <a href="/2023/08/09/shu-xing-jie-gou/">
                     <div class="card-image">
                         
-                        <img src="/medias/featureimages/tree.jpg" class="responsive-img" alt="树形结构">
+                        <img src="/medias/loading.gif" data-original="/medias/featureimages/tree.jpg" class="responsive-img" alt="树形结构">
                         
                         <span class="card-title">树形结构</span>
                     </div>
@@ -1325,6 +1325,19 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-</body>
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,c=(r.imageLazyLoadSetting.preloadRatio,n());function n(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=n());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight+240||document.documentElement.clientHeight+240)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),r.addEventListener("resize",a),r.addEventListener("orientationchange",a)}(this);</script></body>
 
 </html>
