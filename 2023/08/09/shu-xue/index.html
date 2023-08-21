@@ -466,21 +466,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-08-16
+                    2023-08-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.8k
+                    7.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    28 分
+                    29 分
                 </div>
                 
 
@@ -863,7 +863,8 @@ cout <span class="token operator">&lt;&lt;</span> sum<span class="token punctuat
 <h3 id="欧拉（Euler）筛法"><a href="#欧拉（Euler）筛法" class="headerlink" title="欧拉（Euler）筛法"></a>欧拉（Euler）筛法</h3><p>欧拉筛法是埃氏筛法的改进，埃氏筛法终究会出现一个数被多个数筛掉的情况。例如因为120 = 2^3 x 3 x 5，因为2，3，5是120的质因子，所以120会被2筛一次，被3筛一次，被5筛一次，共3次。</p>
 <p>而欧拉筛法保证了每一个合数都被其最小质因子筛去，保证不会重复筛除。故遍历一次就好，时间复杂度为O（n）。（欧拉我神！）</p>
 <p>算法步骤视频-&gt;<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LR4y1Z7pm/?spm_id_from=333.337.search-card.all.click&amp;vd_source=664429be53bbd81b6ef5e987e4b5c17a">传送门</a></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> N<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">mark<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> mark<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">//特判1和0</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> N<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>mark<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment">//存放素数</span>
         primes<span class="token punctuation">[</span><span class="token operator">++</span>pp<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
         <span class="token operator">++</span>sum<span class="token punctuation">;</span>
@@ -873,7 +874,7 @@ cout <span class="token operator">&lt;&lt;</span> sum<span class="token punctuat
         <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">%</span> primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-cout <span class="token operator">&lt;&lt;</span> sum<span class="token punctuation">;</span>  <span class="token comment">//输出总数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+cout <span class="token operator">&lt;&lt;</span> sum<span class="token punctuation">;</span>  <span class="token comment">//输出总数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="快速幂算法"><a href="#快速幂算法" class="headerlink" title="快速幂算法"></a>快速幂算法</h2><p>在计算a的b次方的时候，一种朴素的算法是利用for循环进行b次操作，这样子的时间复杂度是O（b），在实际操作中复杂度还是很高。而数学性质告诉我们，a的b次方可以转化为a*a的b/2次方，所以我们不妨增大a的值，减少b的值来达到缩减计算速度的效果。快速幂算法时间复杂度是O（logb）。</p>
 <h3 id="普通版"><a href="#普通版" class="headerlink" title="普通版"></a>普通版</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">typedef</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ull<span class="token punctuation">;</span>
@@ -1014,6 +1015,36 @@ dp<span class="token punctuation">[</span><span class="token number">0</span><sp
 cout <span class="token operator">&lt;&lt;</span> dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>两个for循环就可以搞定，并且该种方式可以适用于取模运算，但是数据量太大这种方法依旧会超时，具体优化需要用到逆元，笔者目前的知识水平有限，暂时不考虑该方式下的逆元优化问题。</p>
+<h2 id="斯特林（Stirling）公式"><a href="#斯特林（Stirling）公式" class="headerlink" title="斯特林（Stirling）公式"></a>斯特林（Stirling）公式</h2><h3 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h3><p>斯特林公式是一条用来求取n的阶乘的近似值的公式，公式为：</p>
+<p>$$<br>n! \thickapprox \sqrt{2\pi n}(\frac{n}{e})^n<br>$$</p>
+<p>或者更加精确的：</p>
+<p>$$<br>\lim\limits_{x\rightarrow+\infty} \frac{n!}{\sqrt{2\pi n}(\frac{n}{e})^n} = 1<br>$$</p>
+<p>证明过程较复杂，这里不进行展示。</p>
+<h3 id="使用斯特林公式求n！的位数"><a href="#使用斯特林公式求n！的位数" class="headerlink" title="使用斯特林公式求n！的位数"></a>使用斯特林公式求n！的位数</h3><p>要求n！的位数，在C++中，<mark>包含了头文件cmath</mark>之后，只需要ceil（log10（n！））即可。</p>
+<p>代入上述的公式易得，对于位数 f 有：</p>
+<p>$$<br>f = \frac{lg2\pi}{2} + \frac{lgn}{2} + nlgn - nlge<br>$$</p>
+<p>在C++中，可以使用exp（1）来求e的值，使用M_PI来求$\pi$的值。</p>
+<p>代码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cmath&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">double</span> e <span class="token operator">=</span> <span class="token function">exp</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//e的1次方</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">int</span> n<span class="token punctuation">;</span>  <span class="token comment">//输入n来表示n的阶乘</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span>cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			cout <span class="token operator">&lt;&lt;</span> <span class="token string">"1"</span> <span class="token operator">&lt;&lt;</span> <span class="token char">'\n'</span><span class="token punctuation">;</span>    <span class="token comment">//特判1</span>
+			<span class="token keyword">continue</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">double</span> a <span class="token operator">=</span> <span class="token function">log10</span><span class="token punctuation">(</span><span class="token number">2.0</span> <span class="token operator">*</span> M_PI<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2.0</span><span class="token punctuation">;</span>
+		<span class="token keyword">double</span> b <span class="token operator">=</span> <span class="token function">log10</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2.0</span><span class="token punctuation">;</span>
+		<span class="token keyword">double</span> c <span class="token operator">=</span> n <span class="token operator">*</span> <span class="token number">1.0</span> <span class="token operator">*</span> <span class="token function">log10</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">double</span> d <span class="token operator">=</span> n <span class="token operator">*</span> <span class="token function">log10</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token function">ceil</span><span class="token punctuation">(</span>a <span class="token operator">+</span> b <span class="token operator">+</span> c <span class="token operator">-</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cout <span class="token operator">&lt;&lt;</span> ans <span class="token operator">&lt;&lt;</span> <span class="token char">'\n'</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -1439,7 +1470,7 @@ cout <span class="token operator">&lt;&lt;</span> dp<span class="token punctuati
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">14.2k</span>&nbsp;字
+                class="white-color">14.4k</span>&nbsp;字
             
             
             
