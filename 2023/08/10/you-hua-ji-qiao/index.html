@@ -470,21 +470,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-08-15
+                    2023-08-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    410
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -551,6 +551,48 @@ cin<span class="token punctuation">.</span><span class="token function">tie</spa
     <span class="token function">putchar</span><span class="token punctuation">(</span>x <span class="token operator">%</span> <span class="token number">10</span> <span class="token operator">+</span> <span class="token char">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><h3 id="一维前缀和"><a href="#一维前缀和" class="headerlink" title="一维前缀和"></a>一维前缀和</h3><p>定义两个数列{$a_n$}和{$S_n$}，数列{$S_n$}表示数列{$a_n$}的前n项和，其中有：</p>
+<p>$$<br>S_n=\sum_{i=1}^{n}a_i<br>$$</p>
+<p>记$S_{ij}$表示$a_i$到$a_j$的区间和，则有：</p>
+<p>$$<br>S_{ij}=S_j-S_{i-1}<br>$$</p>
+<h3 id="二维前缀和"><a href="#二维前缀和" class="headerlink" title="二维前缀和"></a>二维前缀和</h3><p>二维前缀和一般用于求解一个矩阵当中的某个子矩阵的元素和。</p>
+<p>对于一个矩阵，利用$a_{ij}$表示矩阵当中第 i 行第 j 列的元素值，利用（i，j）表示矩阵第 i 行第 j 列的位置，F（i，j）表示从（1，1）到（i，j）的矩阵元素和。则有：</p>
+<p>$$<br>F(i,j)=F(i-1,j)+F(i,j-1)-F(i-1,j-1)+a_{ij}<br>$$</p>
+<p>而对于（x1，y1）到（x2，y2）的矩阵元素和E，则有：</p>
+<p>$$<br>E=F(x_2,y_2)-F(x_2,y_1-1)-F(x_1-1,y_2)+F(x_1-1,y_1-1)<br>$$</p>
+<h3 id="矩阵压缩"><a href="#矩阵压缩" class="headerlink" title="矩阵压缩"></a>矩阵压缩</h3><p>矩阵压缩用于解决给出一个矩阵并求出子矩阵的元素和最值。在使用矩阵压缩时，使用到了“最大子段和”的思想。</p>
+<h4 id="最大子段和"><a href="#最大子段和" class="headerlink" title="最大子段和"></a>最大子段和</h4><p>最大子段和要求给定一个数组，并选出其中连续且非空的一段使得这段元素和最大。</p>
+<p>这个问题的解决方法是使用动态规划的思想，记dp[i]为以该数组第 i 个元素结束的最大子段和，对于第 i 个元素，如果选择它能够使子段和增大，自然的我们要把它加入子段之中，如果加入后使得子段和变小，则子段的计算就以该元素开始重新计算，故我们可以很快得出状态转移方程：</p>
+<p>$$<br>dp[i]=max{dp[i-1]+a[i],a[i]}<br>$$</p>
+<h4 id="压缩矩阵"><a href="#压缩矩阵" class="headerlink" title="压缩矩阵"></a>压缩矩阵</h4><p>对于一个矩阵，进行压缩的步骤为：</p>
+<ol>
+<li><p>按顺序使用 i 和 j 枚举矩阵的两行，对以 i 为上界，j 为下界的矩阵进行压缩。</p>
+</li>
+<li><p>压缩的时候按列求和，使用一个数组存储该子矩阵的各列元素和。</p>
+</li>
+<li><p>对该数组求最大子段和，当 i 和 j 的双重循环结束后，子矩阵的最大元素和就是求出的各最大子段和中的最大值。</p>
+</li>
+</ol>
+<p>代码如下（<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1719">洛谷P1719</a>）：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">Arr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">memset</span><span class="token punctuation">(</span>dp<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>dp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		ans <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> ans<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">Matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">memset</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> i<span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> k <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>k<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				a<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">+=</span> mp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+			<span class="token function">Arr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -961,7 +1003,7 @@ cin<span class="token punctuation">.</span><span class="token function">tie</spa
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">14.4k</span>&nbsp;字
+                class="white-color">15.1k</span>&nbsp;字
             
             
             
