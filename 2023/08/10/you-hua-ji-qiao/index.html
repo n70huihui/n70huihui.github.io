@@ -470,7 +470,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-01
+                    2023-09-02
                 </div>
                 
 
@@ -561,11 +561,11 @@ cin<span class="token punctuation">.</span><span class="token function">tie</spa
 <p>$$<br>F(i,j)=F(i-1,j)+F(i,j-1)-F(i-1,j-1)+a_{ij}<br>$$</p>
 <p>而对于（x1，y1）到（x2，y2）的矩阵元素和E，则有：</p>
 <p>$$<br>E=F(x_2,y_2)-F(x_2,y_1-1)-F(x_1-1,y_2)+F(x_1-1,y_1-1)<br>$$</p>
-<h3 id="矩阵压缩"><a href="#矩阵压缩" class="headerlink" title="矩阵压缩"></a>矩阵压缩</h3><p>矩阵压缩用于解决给出一个矩阵并求出子矩阵的元素和最值。在使用矩阵压缩时，使用到了“最大子段和”的思想。</p>
-<h4 id="最大子段和"><a href="#最大子段和" class="headerlink" title="最大子段和"></a>最大子段和</h4><p>最大子段和要求给定一个数组，并选出其中连续且非空的一段使得这段元素和最大。</p>
+<h2 id="矩阵压缩"><a href="#矩阵压缩" class="headerlink" title="矩阵压缩"></a>矩阵压缩</h2><p>矩阵压缩用于解决给出一个矩阵并求出子矩阵的元素和最值。在使用矩阵压缩时，使用到了“最大子段和”的思想。</p>
+<h3 id="最大子段和"><a href="#最大子段和" class="headerlink" title="最大子段和"></a>最大子段和</h3><p>最大子段和要求给定一个数组，并选出其中连续且非空的一段使得这段元素和最大。</p>
 <p>这个问题的解决方法是使用动态规划的思想，记dp[i]为以该数组第 i 个元素结束的最大子段和，对于第 i 个元素，如果选择它能够使子段和增大，自然的我们要把它加入子段之中，如果加入后使得子段和变小，则子段的计算就以该元素开始重新计算，故我们可以很快得出状态转移方程：</p>
 <p>$$<br>dp[i]=max{dp[i-1]+a[i],a[i]}<br>$$</p>
-<h4 id="压缩矩阵"><a href="#压缩矩阵" class="headerlink" title="压缩矩阵"></a>压缩矩阵</h4><p>对于一个矩阵，进行压缩的步骤为：</p>
+<h3 id="压缩矩阵"><a href="#压缩矩阵" class="headerlink" title="压缩矩阵"></a>压缩矩阵</h3><p>对于一个矩阵，进行压缩的步骤为：</p>
 <ol>
 <li><p>按顺序使用 i 和 j 枚举矩阵的两行，对以 i 为上界，j 为下界的矩阵进行压缩。</p>
 </li>
@@ -594,41 +594,41 @@ cin<span class="token punctuation">.</span><span class="token function">tie</spa
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="差分"><a href="#差分" class="headerlink" title="差分"></a>差分</h3><p>定义两个数列{$a_n$}和{$d_n$}，数列{$d_n$}中的任意元素$d_i$表示$a_i$与$a_{i-1}$的差，即：</p>
+<h2 id="差分"><a href="#差分" class="headerlink" title="差分"></a>差分</h2><p>定义两个数列{$a_n$}和{$d_n$}，数列{$d_n$}中的任意元素$d_i$表示$a_i$与$a_{i-1}$的差，即：</p>
 <p>$$<br>d_n=a_n-a_{n-1}(其中a_0=0)<br>$$</p>
-<h4 id="差分与前缀和的关系"><a href="#差分与前缀和的关系" class="headerlink" title="差分与前缀和的关系"></a>差分与前缀和的关系</h4><p>根据原数组、差分数组和前缀和数组的数学性质，我们不难得出它们的关系：</p>
+<h3 id="差分与前缀和的关系"><a href="#差分与前缀和的关系" class="headerlink" title="差分与前缀和的关系"></a>差分与前缀和的关系</h3><p>根据原数组、差分数组和前缀和数组的数学性质，我们不难得出它们的关系：</p>
 <ul>
 <li><p>原数组进行差分得到差分数组，差分数组求前缀和得到原数组。</p>
 </li>
 <li><p>原数组求前缀和得到前缀和数组，前缀和数组进行差分得到原数组。</p>
 </li>
 </ul>
-<h4 id="差分的应用"><a href="#差分的应用" class="headerlink" title="差分的应用"></a>差分的应用</h4><p>差分适用于进行离线的区间修改，“离线”即为只能在完全对区间进行修改之后才能进行查询操作。</p>
+<h3 id="差分的应用"><a href="#差分的应用" class="headerlink" title="差分的应用"></a>差分的应用</h3><p>差分适用于进行离线的区间修改，“离线”即为只能在完全对区间进行修改之后才能进行查询操作。</p>
 <p>对于差分数组，如果我们想要将区间 [l，r] 上所有元素加 x，我们只需要对将$d_l+x$以及将$d_{r+1}-x$即可，最后我们将差分数组求其前缀和就可以得到我们要的区间修改了。</p>
-<h3 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h3><p>二分可以分为<mark>二分查找</mark>和<mark>二分答案</mark>。有些时候题目需要我们进行<mark>判断最值</mark>，类似于求出某个满足题目条件的最大值或者最小值，这个时候我们可以考虑进行二分，使用O（logn）的复杂度来查找。而有时候题目会让我们求类似于<mark>最大的最小值</mark>或者<mark>最小的最大值</mark>，这个时候可以考虑二分答案，二分答案的时候需要满足答案具有<mark>单调性</mark>和<mark>有界性</mark>。</p>
+<h2 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h2><p>二分可以分为<mark>二分查找</mark>和<mark>二分答案</mark>。有些时候题目需要我们进行<mark>判断最值</mark>，类似于求出某个满足题目条件的最大值或者最小值，这个时候我们可以考虑进行二分，使用O（logn）的复杂度来查找。而有时候题目会让我们求类似于<mark>最大的最小值</mark>或者<mark>最小的最大值</mark>，这个时候可以考虑二分答案，二分答案的时候需要满足答案具有<mark>单调性</mark>和<mark>有界性</mark>。</p>
 <p>二分模板：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>	<span class="token comment">//left和right分别代表左边界和右边界，或者是下界和上界</span>
-	<span class="token keyword">int</span> mid <span class="token operator">=</span> left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>	<span class="token comment">//防止溢出的小技巧</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">check</span><span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>	<span class="token comment">//check函数，用来判断mid是否符合题意，不同题目有不同写法</span>
-		left <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>		<span class="token comment">//或者是right = mid - 1</span>
-		ans <span class="token operator">=</span> mid<span class="token punctuation">;</span>	<span class="token comment">//记录答案</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span> <span class="token punctuation">{</span>
-		right <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">//或者是left = mid + 1 </span>
-	<span class="token punctuation">}</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">//left和right分别代表左边界和右边界，或者是下界和上界</span>
+    <span class="token keyword">int</span> mid <span class="token operator">=</span> left <span class="token operator">+</span> <span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>    <span class="token comment">//防止溢出的小技巧</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">check</span><span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">//check函数，用来判断mid是否符合题意，不同题目有不同写法</span>
+        left <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>        <span class="token comment">//或者是right = mid - 1</span>
+        ans <span class="token operator">=</span> mid<span class="token punctuation">;</span>    <span class="token comment">//记录答案</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        right <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">//或者是left = mid + 1 </span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 cout <span class="token operator">&lt;&lt;</span> ans<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>有时候需要精度更高的二分，有以下模板：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>r <span class="token operator">-</span> l <span class="token operator">&gt;=</span> <span class="token number">1e-5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>	<span class="token comment">//精度更高的二分需要控制在1e-5上</span>
-	<span class="token keyword">double</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> <span class="token punctuation">(</span>r <span class="token operator">-</span> l<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2.0</span><span class="token punctuation">;</span>	<span class="token comment">//使用double存储mid，注意除以2.0</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">check</span><span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		ans <span class="token operator">=</span> mid<span class="token punctuation">;</span>
-		l <span class="token operator">=</span> mid<span class="token punctuation">;</span>	<span class="token comment">//或者写成 r = mid</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span> <span class="token punctuation">{</span>
-		r <span class="token operator">=</span> mid<span class="token punctuation">;</span>	<span class="token comment">//或者写成 l = mid</span>
-	<span class="token punctuation">}</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>r <span class="token operator">-</span> l <span class="token operator">&gt;=</span> <span class="token number">1e-5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">//精度更高的二分需要控制在1e-5上</span>
+    <span class="token keyword">double</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> <span class="token punctuation">(</span>r <span class="token operator">-</span> l<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2.0</span><span class="token punctuation">;</span>    <span class="token comment">//使用double存储mid，注意除以2.0</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">check</span><span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ans <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+        l <span class="token operator">=</span> mid<span class="token punctuation">;</span>    <span class="token comment">//或者写成 r = mid</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        r <span class="token operator">=</span> mid<span class="token punctuation">;</span>    <span class="token comment">//或者写成 l = mid</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
@@ -1047,7 +1047,7 @@ cout <span class="token operator">&lt;&lt;</span> ans<span class="token punctuat
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.2k</span>&nbsp;字
+                class="white-color">17.5k</span>&nbsp;字
             
             
             

@@ -466,21 +466,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-08-31
+                    2023-09-03
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.2k
+                    8.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    30 分
+                    36 分
                 </div>
                 
 
@@ -503,7 +503,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h1><h2 id="幻方"><a href="#幻方" class="headerlink" title="幻方"></a>幻方</h2><h3 id="经典的数学游戏——幻方"><a href="#经典的数学游戏——幻方" class="headerlink" title="经典的数学游戏——幻方"></a>经典的数学游戏——幻方</h3><p>幻方是一种神奇的N x N矩阵：它由数字1，2，3，……，N x N构成，且每行，每列以及两条对角线的数字之和都相同。</p>
+                <h1 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h1><p>在正式开始学习数学之前，让我们先来玩一个数学游戏~</p>
+<h2 id="幻方"><a href="#幻方" class="headerlink" title="幻方"></a>幻方</h2><h3 id="经典的数学游戏——幻方"><a href="#经典的数学游戏——幻方" class="headerlink" title="经典的数学游戏——幻方"></a>经典的数学游戏——幻方</h3><p>幻方是一种神奇的N x N矩阵：它由数字1，2，3，……，N x N构成，且每行，每列以及两条对角线的数字之和都相同。</p>
 <p>相信我们从小学的时候就开始接触幻方了，记得从那个时候起就有这种填幻方的数学题。不过以前都是一通瞎填，毫无章法。而最近因为各种机缘巧合再一次碰到了幻方（<del>死去的记忆开始攻击我</del>）那今天就让我们正式来讨论一下幻方的解法。</p>
 <p>（笔者能力有限，在这里我们暂时只考虑奇数阶的幻方填法）</p>
 <h3 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h3><p><mark>幻方最早起源于中国。</mark>又称方阵或者厅平方，宋代数学家杨辉称之为<mark>纵横图</mark>。相传，大约两千年前，夏禹治水之时，黄河中跃出一匹神马，马背上驮着一幅图，人称《河图》 ；又洛水河中浮出一只神龟，龟背上也有一张象征吉祥的图案，被人们称为《洛书》。他们发现，图案每一列，每一行及对角线，加起来的数字和都是一样的，这就是我们所称的<mark>幻方</mark>。</p>
@@ -605,7 +606,7 @@
 <p>我们知道，原有序数表当中（i’ ，j’）经过横错位、横补角、竖错位、竖补角的运算之后得到无序数表中对应的位置（i，j）。而我们想在知道（i，j）的情况下计算（i’，j’），显而易见，我们只需要对错位补角法进行<mark>逆运算</mark>就可以还原出（i，j）了。</p>
 <p>我们先来进行第一步逆运算。（<del>让我们开始进行华丽的逆转吧！</del>）</p>
 <p>观察错位补角法<strong>第五步</strong>和<strong>第三步</strong>的数表，可以发现，<strong>第五步到第三步</strong>，元素的列位置不发生变化，而行位置的变化从左到右依次是：向上2格，向上1格，不变，向下1格，向下2格。记向下为正，向下为负，则行变换的数值可以记为-2，-1，0，+1，+2。而对应的列数是0，1，2，3，4，故有<code>行变换的数值 = 对应列数 - （n - 1）/2 </code>，<code>第三步行数 = 第五步行数 + 行变换的数值</code>。而考虑到计算出来的行数有可能是负数，但行数是大于0且小于等于n-1的，所以我们需要将其<mark>修正</mark>为对应位置的正数表示，这也很简单，只需要利用取模运算就好了，即<code>第三步行数 = （第五步行数 + 对应列数 - （n - 1）/2 + n）% n</code>，整理成<code>第三步行数 = （第五步行数 + 对应列数 +（n + 1）/2 ）% n</code>，所以，可以得到第一步逆运算为：（i，j）-&gt; （（i + j + （n + 1）/2）% n，j ）。</p>
-<p>接下来进行第二步逆运算。（<del>让我们开始进行华丽的故技重施吧！</del>）</p>
+<p>接下来进行第二步逆运算。（<del>逆转！故技重施！</del>）</p>
 <p>我们记<code>（i + j + （n + 1）/2）% n = tmpi （2式）</code>，则上述的逆运算表示为（i，j）-&gt; （tmpi，j ）。</p>
 <p>观察错位补角法<strong>第三步</strong>和<strong>第一步</strong>的数表，可以发现，<strong>第三步到第一步</strong>，元素的行位置不发生变化，而列位置的变化从上到下依次是：向左2格，向左1格，不变，向右1格，向右2格。记向右为正，向左为负，则列变换的数值可以记为-2，-1，0，+1，+2。而对应的行数是0，1，2，3，4，故有<code>列变换的数值 = 对应行数 - （n - 1）/2</code>，<code>第一步列数 = 第三步列数 + 列变换的数值</code>。而考虑到计算出来的列数有可能是负数，但列数是大于0且小于等于n-1的，所以我们需要将其修正为对应位置的正数表示，故技重施，利用取模运算即可。即<code>第一步的列数 = （第三步的列数 + 对应行数 - （n - 1）/2 + n）% n</code>，整理成<code>第一步列数 = （第三步列数 + 对应行数 +（n + 1）/2 ）% n</code>，所以可以得到第二步的逆运算为：（tmpi，j）-&gt;（tmpi，（tmpi + j +（n + 1）/2）% n）= （i’，j’）。至此，我们要的 i’ 和 j’ 就计算出来了。</p>
 <p>整理一下，结合<code>（2式）</code>可得：经过映射后的（i’，j’）= （  i + j + （n + 1）/2）% n，（（i + j + （n + 1）/2）% n + j +（n + 1）/2 ）% n ）。</p>
@@ -804,7 +805,8 @@ cout <span class="token operator">&lt;&lt;</span> s2 <span class="token operator
 
 <h4 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h4><p>C++可以使用内置函数__gcd（a,b）来求两数的最大公约数，使用时需包含头文件algorithm。</p>
 <h2 id="蔡勒公式"><a href="#蔡勒公式" class="headerlink" title="蔡勒公式"></a>蔡勒公式</h2><p>用于知道年月日求对应是周几</p>
-<h3 id="定理-1"><a href="#定理-1" class="headerlink" title="定理"></a>定理</h3><p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/Caile.png"></p>
+<h3 id="定理-1"><a href="#定理-1" class="headerlink" title="定理"></a>定理</h3><p>$$<br>D=[\frac{c}{4}]-2c+y+[\frac{y}{4}]+[\frac{13(m+1)}{5}]+d-1<br>$$</p>
+<p>$$<br>W=D\mod 7<br>$$</p>
 <p>其中：</p>
 <ul>
 <li><p>W是星期数</p>
@@ -826,7 +828,8 @@ cout <span class="token operator">&lt;&lt;</span> s2 <span class="token operator
 </ul>
 <h3 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h3><p>证明见<a target="_blank" rel="noopener" href="https://www.cnblogs.com/faterazer/p/11393521.html">faterazer博客</a></p>
 <h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><p>计算 1994 年 12 月 13 日是星期几。显然 c = 19，y = 94，m = 12，d = 13，代入公式：</p>
-<p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/Caile2.png"></p>
+<p>$$<br>D=[\frac{19}{4}]-2<em>19 +94+[\frac{94}{4}]+[\frac{13</em>(12+1)}{5}]+13-1=128<br>$$</p>
+<p>$$<br>W=128\mod7 = 2<br>$$</p>
 <h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><ol>
 <li>在计算机编程中，W 的计算结果有可能是负数。我们需要注意，数学中的求余运算和编程中的求余运算不是完全相同的，数学上余数不能是负数，而编程中余数可以是负数。因此，在计算机中 W 是负数时，我们需要进行修正。修正方法十分简单：让 W 加上一个足够大的 7 的整数倍，使其成为正数，得到的结果再对 7 取余即可。比如 -15，我可以让其加上 70，得到 55，再除以 7 余 6，通过余数可知这一天是星期六。</li>
 <li>此公式只适用于格里高利历（也就是现在的公历）。</li>
@@ -948,8 +951,8 @@ ull <span class="token function">quick_pow</span><span class="token punctuation"
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="组合数求解方法"><a href="#组合数求解方法" class="headerlink" title="组合数求解方法"></a>组合数求解方法</h2><p>先上公式</p>
-<img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/Comnum.png" title="" alt="" data-align="inline">
-
+<p>$$<br>C_n^m=1,(m=0或m=n)<br>$$</p>
+<p>$$<br>C_n^m=C_{n-1}^m+C_{n-1}^{m-1}，(n&gt;m&gt;0)<br>$$</p>
 <p>所以，我们可以使用动态规划来求解组合数，直接上代码。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//初始化</span>
 <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -973,11 +976,12 @@ ull <span class="token function">quick_pow</span><span class="token punctuation"
 <p>卡特兰数最初是用来解决凸包划分三角形的问题，从该问题延伸出来的很多问题也是非常经典的组合数学问题。</p>
 <h3 id="数列形式"><a href="#数列形式" class="headerlink" title="数列形式"></a>数列形式</h3><p>其数列形式为：<mark>1，1，2，5，14，42，132，429……</mark></p>
 <h3 id="定理-2"><a href="#定理-2" class="headerlink" title="定理"></a>定理</h3><p>设$a_n$为卡特兰数的通项公式，则其<mark>定义式</mark>为：</p>
-<p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/Catlan1.png"></p>
+<p>$$<br>a_n=a_0a_{n-1}+a_1a_{n-2}+a_2a_{n-3}+…+a_{n-1}a_0=\sum_{k=0}^{n-1}a_ka_{n-1-k}（其中a_0=1，a_1=1）<br>$$</p>
 <p>整理可得：</p>
-<p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/Catlan2.png"></p>
+<p>$$<br>C(n)=a_n=\frac{C_{2n}^{n}}{n+1}<br>$$</p>
 <p>另外分别有两个变式分别为：</p>
-<p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/Catlan3.png"></p>
+<p>$$<br>C(n)=C_{2n}^{n}-C_{2n}^{n+1}<br>$$</p>
+<p>$$<br>C(n)=C(n-1)\frac{4n-2}{n+1}<br>$$</p>
 <p>这四条公式皆为卡特兰数的通项公式，不同的情境下有不同用法。</p>
 <h3 id="举例-2"><a href="#举例-2" class="headerlink" title="举例"></a>举例</h3><p>卡特兰数所涉及到的问题都非常经典，常见的问题有：</p>
 <ul>
@@ -1050,6 +1054,118 @@ cout <span class="token operator">&lt;&lt;</span> dp<span class="token punctuati
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="康托（Cantor）展开"><a href="#康托（Cantor）展开" class="headerlink" title="康托（Cantor）展开"></a>康托（Cantor）展开</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>康托展开是一个全排列到一个自然数的<mark>双射</mark>，常用于<mark>构建哈希表</mark>时的空间压缩。康托展开的实质是计算当前排列在所有由小到大全排列中的顺序，因此是<mark>可逆的</mark>。</p>
+<h3 id="康托展开运算"><a href="#康托展开运算" class="headerlink" title="康托展开运算"></a>康托展开运算</h3><p>已知一个由1-n的正整数任意组合而成的排列S，则该排列S在1-n的有序全排列中在S前面的排列个数X为：</p>
+<p>$$<br>X=a_1(n-1)!+a_2(n-2)!+……+a_n0!<br>$$</p>
+<p>其中，$a_i$表示原排列的在第 i 位以后比$a_i$小的数的个数$(1&lt;=i&lt;=n)$</p>
+<h4 id="举例-3"><a href="#举例-3" class="headerlink" title="举例"></a>举例</h4><p>对于一个由1-5的正整数组合而成的排列S = {3，4，1，5，2}</p>
+<p>首先观察第一个数，如果第一位数填1，则后续的4个数是2，3，4，5的一个排列，一共是4！种，因为是1开头，比3小，所以这4！个排列一定在S之前；同样的，如果第一位数填2，则后续的4个数是1，3，4，5的一个排列，也有4！种，因为是2开头，比3小，所以这4！个排列也在S之前。换句话来讲，$a_1$ = 2，因为此时在第一位数字3后面的4位数中有两个数比3小。</p>
+<p>而对于第二个数4，按理讲第二位如果是1，2，3任意一个都可以满足排列在S之前，但是3已经在第一位固定住了，所以第二位只能填1或2，而后面就是剩下3个数的排列。换句话来讲，此时$a_2$ = 2，因为在第二位数字4后面有2个数比4小。</p>
+<p>类比推理，可以得到最终X = 2x4！+ 2x3！+ 0x2！+ 1x1！+ 0x0！=61，故有61个排列在S前，所以S在由1-5组合而成的排列中位列第62名。</p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span>num<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span>fac<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">init_fac</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>	
+	fac<span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">//0!=1</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		fac<span class="token punctuation">[</span>n<span class="token operator">-</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> fac<span class="token punctuation">[</span>n<span class="token operator">-</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">*</span> i<span class="token punctuation">;</span>	<span class="token comment">//如果需要取模，则在这里取模</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">cantor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">int</span> rank <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> tmp <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>num<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> num<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">++</span>tmp<span class="token punctuation">;</span>	<span class="token comment">//统计比ai小的数的个数</span>
+		<span class="token punctuation">}</span>
+		rank <span class="token operator">+=</span> <span class="token punctuation">(</span>tmp <span class="token operator">*</span> fac<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//如果需要取模，这里也要取模</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> rank<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">//有rank个排列在当前排列之前，所以当前排列位于第rank+1名</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span>	<span class="token comment">//由1-n的正整数组合而成的排列</span>
+	<span class="token function">init_fac</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//初始化阶乘</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		cin <span class="token operator">&gt;&gt;</span> num<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//输入排列</span>
+	<span class="token punctuation">}</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token function">cantor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="康托展开逆运算"><a href="#康托展开逆运算" class="headerlink" title="康托展开逆运算"></a>康托展开逆运算</h3><p>由上述已知：</p>
+<p>$$<br>X=a_1(n-1)!+a_2(n-2)!+……+a_n0!<br>$$</p>
+<p>康托展开逆运算需要在知道X的情况下推出相对应的排列。<del>（康托展开，然后逆转！）</del></p>
+<h4 id="举例-4"><a href="#举例-4" class="headerlink" title="举例"></a>举例</h4><p>要计算康托展开的逆运算，我们不妨先来看一个例子：</p>
+<p>现在有一个数45613，我们知道，这个数可以写成以下形式：</p>
+<p>$$<br>45613=4<em>10^4+5</em>10^3+6<em>10^2+1</em>10^1+3*10^0<br>$$</p>
+<p>观察到$10^4$，$10^3$，……，$10^0$与$(n-1)!$，$(n-2)!$，……，$0!$有异曲同工之妙。</p>
+<p>对于45613：</p>
+<ul>
+<li><p>45613 ÷ $10^4$ = <mark>4</mark>余5613，那么45613的第一位数就是4</p>
+</li>
+<li><p>5613 ÷ $10^3$ = <mark>5</mark>余613，那么45613的第二位数就是5</p>
+</li>
+<li><p>……</p>
+</li>
+</ul>
+<p>这样子推下去，我们就可以把45613的各个位数给取出来。那么，按照这样子的方法，回到康托运算，如果我们知道了X，就可以类比推理出对应的排列了。</p>
+<p>例如，如果知道排名是62位，那么X = 62 - 1 = 61。接下来：</p>
+<ul>
+<li><p>61 ÷ 4！= <mark>2</mark>余13，说明比首位小的数有2个，则首位是3（不要忘了$a_i$表示原排列的在第 i 位以后比$a_i$小的数的个数）</p>
+</li>
+<li><p>13 ÷ 3！=<mark>2</mark>余1，说明比第二位小的数有2个，则第二位是4</p>
+</li>
+<li><p>1 ÷ 2！=<mark>0</mark>余1，说明比第三位小的数有0个，则第三位是1</p>
+</li>
+<li><p>1 ÷ 1！=<mark>1</mark>余0，说明比第四位小的数有1个，则第四位是5</p>
+</li>
+<li><p>最后一位自然填2</p>
+</li>
+</ul>
+<p>故最终组合S = {3，4，1，5，2}</p>
+<h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;cstring&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span>m<span class="token punctuation">,</span>num<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span>fac<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//m为排列中数的个数</span>
+<span class="token keyword">bool</span> used<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//排列中有哪些数已经被用过</span>
+<span class="token keyword">void</span> <span class="token function">init_fac</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fac<span class="token punctuation">[</span>m<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> m <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		fac<span class="token punctuation">[</span>m <span class="token operator">-</span> i<span class="token punctuation">]</span> <span class="token operator">=</span> fac<span class="token punctuation">[</span>m <span class="token operator">-</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">*</span> i<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">decantor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	n<span class="token operator">--</span><span class="token punctuation">;</span>	<span class="token comment">//还原排名</span>
+	<span class="token keyword">int</span> pointer <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> quotient <span class="token operator">=</span> n <span class="token operator">/</span> fac<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//商</span>
+		<span class="token keyword">int</span> remainder <span class="token operator">=</span> n <span class="token operator">%</span> fac<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//余数</span>
+		n <span class="token operator">%=</span> fac<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> tmp <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>	<span class="token comment">//临时计数，记录比当前数小的数的个数</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span> <span class="token punctuation">{</span>	<span class="token comment">//填数</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>used<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">++</span>tmp<span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>tmp <span class="token operator">!=</span> quotient <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+			used<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">//使用这个数</span>
+			num<span class="token punctuation">[</span>pointer<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> j<span class="token punctuation">;</span>
+			<span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		cout <span class="token operator">&lt;&lt;</span> num<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token char">' '</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token char">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token function">memset</span><span class="token punctuation">(</span>used<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>used<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cin <span class="token operator">&gt;&gt;</span> n <span class="token operator">&gt;&gt;</span> m<span class="token punctuation">;</span>
+	<span class="token function">init_fac</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//初始化阶乘</span>
+	<span class="token function">decantor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//康托展开逆运算</span>
+	<span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//打印排列</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -1475,7 +1591,7 @@ cout <span class="token operator">&lt;&lt;</span> dp<span class="token punctuati
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.2k</span>&nbsp;字
+                class="white-color">17.5k</span>&nbsp;字
             
             
             
