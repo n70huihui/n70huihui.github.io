@@ -470,21 +470,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-05
+                    2023-09-06
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    3.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    12 分
                 </div>
                 
 
@@ -652,28 +652,173 @@ cout <span class="token operator">&lt;&lt;</span> ans<span class="token punctuat
 <p>另外，unique函数的代码可以模拟成如下形式：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">iterator <span class="token function">My_Unique</span><span class="token punctuation">(</span>iterator first<span class="token punctuation">,</span> iterator last<span class="token punctuation">)</span><span class="token comment">//两个参数都是迭代器</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span>first <span class="token operator">==</span> last<span class="token punctuation">)</span>
-		<span class="token keyword">return</span> last<span class="token punctuation">;</span>  <span class="token comment">// 只有一个元素的情况</span>
-	iterator result <span class="token operator">=</span> first<span class="token punctuation">;</span>  <span class="token comment">// 从第一个元素开始，result指针是用来覆盖原数组的</span>
-	<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">++</span>first <span class="token operator">!=</span> last<span class="token punctuation">)</span>   <span class="token comment">// 直到最后一个元素</span>
-	<span class="token punctuation">{</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>result <span class="token operator">!=</span> <span class="token operator">*</span>first<span class="token punctuation">)</span>    <span class="token comment">// 找到了一个不重复的元素</span>
-			<span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">++</span>result<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">*</span>first<span class="token punctuation">;</span>   <span class="token comment">// 覆盖前面的元素</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> <span class="token operator">++</span>result<span class="token punctuation">;</span>          <span class="token comment">// 返回最后不重复元素的下一个元素的坐标的迭代器</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>first <span class="token operator">==</span> last<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> last<span class="token punctuation">;</span>  <span class="token comment">// 只有一个元素的情况</span>
+    iterator result <span class="token operator">=</span> first<span class="token punctuation">;</span>  <span class="token comment">// 从第一个元素开始，result指针是用来覆盖原数组的</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">++</span>first <span class="token operator">!=</span> last<span class="token punctuation">)</span>   <span class="token comment">// 直到最后一个元素</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>result <span class="token operator">!=</span> <span class="token operator">*</span>first<span class="token punctuation">)</span>    <span class="token comment">// 找到了一个不重复的元素</span>
+            <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">++</span>result<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">*</span>first<span class="token punctuation">;</span>   <span class="token comment">// 覆盖前面的元素</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token operator">++</span>result<span class="token punctuation">;</span>          <span class="token comment">// 返回最后不重复元素的下一个元素的坐标的迭代器</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>从函数原型和模拟代码中不难看出，unique函数返回的是一个<mark>迭代器</mark>，这是一个指向去重后不包含重复元素序列中<mark>最后一个元素的下一个元素的位置</mark>的迭代器。并且，去重的原理是直接对原数组进行数值上的覆盖，<strong>把没有重复的元素覆盖到数组前端来，并不是将重复的元素移到数组后端去</strong>，所以，实际数组的长度并没有发生改变。</p>
 <p>假设有一个num[n]数组，我们现在使用unique对它进行去重，那么，我们利用unique返回迭代器的原理，利用如下代码可以获得去重后的数列的实际长度：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> num <span class="token operator">+</span> n<span class="token punctuation">)</span> <span class="token operator">-</span> num<span class="token punctuation">;</span>	<span class="token comment">//返回的迭代器减去初始地址，得到数组长度</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> num <span class="token operator">+</span> n<span class="token punctuation">)</span> <span class="token operator">-</span> num<span class="token punctuation">;</span>    <span class="token comment">//返回的迭代器减去初始地址，得到数组长度</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>对于vector容器，有：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> len<span class="token operator">=</span><span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">-</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//返回的迭代器减去初始地址，得到容器长度</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> len<span class="token operator">=</span><span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">-</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//返回的迭代器减去初始地址，得到容器长度</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>对于vector容器，我们还可以结合erase函数将容器的长度真正减少到去重后的实际长度：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">num<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span><span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//区间删除，删除unique返回的迭代器到容器真正末端迭代器的位置，这一段就是去重后理应废除掉的数组</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">num<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span><span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//区间删除，删除unique返回的迭代器到容器真正末端迭代器的位置，这一段就是去重后理应废除掉的数组</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="查找（lower-bound）"><a href="#查找（lower-bound）" class="headerlink" title="查找（lower_bound）"></a>查找（lower_bound）</h3><p>STL库当中的lower_bound函数可以帮助我们进行元素的查找，使用的时候需要包含algorithm的头文件</p>
+<h3 id="查找（lower-bound）"><a href="#查找（lower-bound）" class="headerlink" title="查找（lower_bound）"></a>查找（lower_bound）</h3><p>STL库当中的lower_bound函数可以帮助我们进行元素的查找，使用的时候需要包含algorithm的头文件。</p>
+<p>函数原型有两个：</p>
+<ul>
+<li><p>iterator lower_bound （iterator first，iterator last，const T&amp; val）；</p>
+</li>
+<li><p>iterator lower_bound（iterator first，iterator last，const T&amp; val，bool myCmp）；</p>
+</li>
+</ul>
+<p>第一个原型用于查找 [first，last）区间内 <mark>&gt;= val 值</mark>的元素，第二个原型用于查找 [first，last）区间内第一个不满足myCmp规则的元素。函数返回的是该元素对应的迭代器。</p>
+<p>该算法的底层逻辑是<mark>二分查找</mark>，故要求容器<mark>有序</mark>，时间复杂度为O（logn）。</p>
+<h3 id="离散化步骤"><a href="#离散化步骤" class="headerlink" title="离散化步骤"></a>离散化步骤</h3><table>
+<thead>
+<tr>
+<th>原数组：</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>元素值</td>
+<td>999</td>
+<td>1</td>
+<td>999</td>
+<td>15</td>
+<td>1000000</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>下标</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>排序：</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>元素值</td>
+<td>1</td>
+<td>15</td>
+<td>999</td>
+<td>999</td>
+<td>10000</td>
+<td>1000000</td>
+</tr>
+<tr>
+<td>下标</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>去重：</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>元素值</td>
+<td>1</td>
+<td>15</td>
+<td>999</td>
+<td>10000</td>
+<td>1000000</td>
+<td></td>
+</tr>
+<tr>
+<td>下标</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>还原：</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>元素值</td>
+<td>999</td>
+<td>1</td>
+<td>999</td>
+<td>15</td>
+<td>1000000</td>
+<td>10000</td>
+</tr>
+<tr>
+<td>下标</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>4</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<h3 id="离散化模板"><a href="#离散化模板" class="headerlink" title="离散化模板"></a>离散化模板</h3><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/U232423">洛谷U232423</a></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;vector&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;algorithm&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> maxn <span class="token operator">=</span> <span class="token number">2e5</span> <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">long</span> <span class="token keyword">long</span> ll<span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">;</span>ll b<span class="token punctuation">;</span>
+vector<span class="token operator">&lt;</span>ll<span class="token operator">&gt;</span> tmp<span class="token punctuation">,</span>all<span class="token punctuation">;</span>	<span class="token comment">//tmp是离散化数组，all是原数组</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		cin <span class="token operator">&gt;&gt;</span> b<span class="token punctuation">;</span>
+		tmp<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		all<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">sort</span><span class="token punctuation">(</span>tmp<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tmp<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//排序，保证数组有序</span>
+	tmp<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span><span class="token function">unique</span><span class="token punctuation">(</span>tmp<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tmp<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tmp<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//去重，离散化</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> all<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token function">lower_bound</span><span class="token punctuation">(</span>tmp<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tmp<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> all<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">-</span>tmp<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//当前迭代器减去begin得到具体离散化位置</span>
+		cout <span class="token operator">&lt;&lt;</span> index <span class="token operator">+</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token char">' '</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -1091,7 +1236,7 @@ cout <span class="token operator">&lt;&lt;</span> ans<span class="token punctuat
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">18.7k</span>&nbsp;字
+                class="white-color">19.1k</span>&nbsp;字
             
             
             
