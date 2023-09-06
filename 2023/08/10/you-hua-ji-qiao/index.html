@@ -470,21 +470,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-02
+                    2023-09-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    2.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    10 分
                 </div>
                 
 
@@ -512,7 +512,7 @@
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">std<span class="token double-colon punctuation">::</span>ios<span class="token double-colon punctuation">::</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 cin<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cout<span class="token punctuation">.</span><span class="token function">tie</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>当然那样还是慢，最快的方法还是手写快读快写。</p>
+<p>这样可以大幅度提升输入输出速度，当然最快的方法还是手写快读快写。</p>
 <p>快读就是把输入的数字按位读取，然后注意判断一下正负号就好。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//快读函数</span>
     <span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> w <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">//s是数字数值，w是数字符号</span>
@@ -564,7 +564,7 @@ cin<span class="token punctuation">.</span><span class="token function">tie</spa
 <h2 id="矩阵压缩"><a href="#矩阵压缩" class="headerlink" title="矩阵压缩"></a>矩阵压缩</h2><p>矩阵压缩用于解决给出一个矩阵并求出子矩阵的元素和最值。在使用矩阵压缩时，使用到了“最大子段和”的思想。</p>
 <h3 id="最大子段和"><a href="#最大子段和" class="headerlink" title="最大子段和"></a>最大子段和</h3><p>最大子段和要求给定一个数组，并选出其中连续且非空的一段使得这段元素和最大。</p>
 <p>这个问题的解决方法是使用动态规划的思想，记dp[i]为以该数组第 i 个元素结束的最大子段和，对于第 i 个元素，如果选择它能够使子段和增大，自然的我们要把它加入子段之中，如果加入后使得子段和变小，则子段的计算就以该元素开始重新计算，故我们可以很快得出状态转移方程：</p>
-<p>$$<br>dp[i]=max{dp[i-1]+a[i],a[i]}<br>$$</p>
+<p>$$<br>dp[i]=max(dp[i-1]+a[i],a[i])<br>$$</p>
 <h3 id="压缩矩阵"><a href="#压缩矩阵" class="headerlink" title="压缩矩阵"></a>压缩矩阵</h3><p>对于一个矩阵，进行压缩的步骤为：</p>
 <ol>
 <li><p>按顺序使用 i 和 j 枚举矩阵的两行，对以 i 为上界，j 为下界的矩阵进行压缩。</p>
@@ -603,8 +603,13 @@ cin<span class="token punctuation">.</span><span class="token function">tie</spa
 <li><p>原数组求前缀和得到前缀和数组，前缀和数组进行差分得到原数组。</p>
 </li>
 </ul>
-<h3 id="差分的应用"><a href="#差分的应用" class="headerlink" title="差分的应用"></a>差分的应用</h3><p>差分适用于进行离线的区间修改，“离线”即为只能在完全对区间进行修改之后才能进行查询操作。</p>
+<h3 id="一维差分"><a href="#一维差分" class="headerlink" title="一维差分"></a>一维差分</h3><p>差分适用于进行离线的区间修改，“离线”即为只能在完全对区间进行修改之后才能进行查询操作。</p>
 <p>对于差分数组，如果我们想要将区间 [l，r] 上所有元素加 x，我们只需要对将$d_l+x$以及将$d_{r+1}-x$即可，最后我们将差分数组求其前缀和就可以得到我们要的区间修改了。</p>
+<h3 id="二维差分"><a href="#二维差分" class="headerlink" title="二维差分"></a>二维差分</h3><p>二维差分更多的是对于一个矩阵的某个子矩阵的所有元素进行更改操作。</p>
+<p>例如，我们利用 V（i，j）表示第 i 行第 j 列的元素，假设现在要对（x1，y1）到（x2，y2）的所有元素都加x，则差分矩阵可进行如下操作：</p>
+<p>$$<br>v(x_1,y_1)+=x,v(x_1,y_2+1)-=x,v(x_2+1,y_1)-=x,v(x_2+1,y_2+1)+=x<br>$$</p>
+<p>该操作证明不难，这里不作详细说明。</p>
+<p>倘若我们要得到原矩阵，只需要对差分后的矩阵求其二维前缀和即可。</p>
 <h2 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h2><p>二分可以分为<mark>二分查找</mark>和<mark>二分答案</mark>。有些时候题目需要我们进行<mark>判断最值</mark>，类似于求出某个满足题目条件的最大值或者最小值，这个时候我们可以考虑进行二分，使用O（logn）的复杂度来查找。而有时候题目会让我们求类似于<mark>最大的最小值</mark>或者<mark>最小的最大值</mark>，这个时候可以考虑二分答案，二分答案的时候需要满足答案具有<mark>单调性</mark>和<mark>有界性</mark>。</p>
 <p>二分模板：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>left <span class="token operator">&lt;=</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">//left和right分别代表左边界和右边界，或者是下界和上界</span>
@@ -630,6 +635,45 @@ cout <span class="token operator">&lt;&lt;</span> ans<span class="token punctuat
         r <span class="token operator">=</span> mid<span class="token punctuation">;</span>    <span class="token comment">//或者写成 l = mid</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="离散化"><a href="#离散化" class="headerlink" title="离散化"></a>离散化</h2><p>离散化，指把无限空间中有限的个体映射到有限的空间中去（<del>这句话摘自百度百科，不得不说，还是有点抽象的</del>），离散化是程序设计中比较实用的技巧，可以大幅度提升时空效率。离散化可以认为是一种<mark>哈希</mark>，记录了数字的<mark>相对大小</mark>，省去不需要使用的空间。</p>
+<p>比如说，对于一个数组S = {1，1e4，99，1e6，99}，有些时候，为了哈希方便，我们可能不得不开一个长度为1e6的数组来方便我们作判断。但是，可以很直观的看出，S数组当中的数字数值跨度很大，特别是其中两个数字1e4和1e6，整整跨了两个数量级，这个时候我们开一个长度为1e6的数组来存储在空间上的浪费就很大。所以，我们可以利用离散化的思想来处理，我们把1记录为1，把99记录为2，把1e4记录为3，把1e6记录为4，则新数组S’ = {1，2，3，4}，换句话讲，新数组S’相对于S数组有三个优化：第一个是对数组进行<mark>排序</mark>；第二个优化是对S数组进行<mark>去重</mark>；第三个优化就是S’数组记录了S数组元素的<mark>相对大小</mark>，若要进行哈希，则可以对S’数组进行哈希，这个时候我们只需要开一个长度为4的数组即可。</p>
+<p>在了解离散化的具体步骤之前，我们需要事先对两个操作进行详解：</p>
+<h3 id="去重（unique）"><a href="#去重（unique）" class="headerlink" title="去重（unique）"></a>去重（unique）</h3><p>我们一般使用STL库当中的unique函数进行去重操作，使用的时候需要包含algorithm的头文件，并且需要保证数组是有序排列。</p>
+<p>unique函数的作用是：去除数组当中<mark>相邻</mark>的重复元素（特别注意！！！正因为unique是去重<mark>相邻</mark>元素，所以如果要保证所有重复元素被去除，一定要保证数组是<mark>有序</mark>的！）</p>
+<p>unique函数的原型有两个，分别为：</p>
+<ul>
+<li><p>iterator unique（iterator it_1, iterator it_2）;</p>
+</li>
+<li><p>iterator unique（iterator it_1, iterator it_2, bool myCmp）;</p>
+</li>
+</ul>
+<p>注意这里的区间是左开右闭，即：[ it_1, it_2）</p>
+<p>另外，unique函数的代码可以模拟成如下形式：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">iterator <span class="token function">My_Unique</span><span class="token punctuation">(</span>iterator first<span class="token punctuation">,</span> iterator last<span class="token punctuation">)</span><span class="token comment">//两个参数都是迭代器</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>first <span class="token operator">==</span> last<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> last<span class="token punctuation">;</span>  <span class="token comment">// 只有一个元素的情况</span>
+	iterator result <span class="token operator">=</span> first<span class="token punctuation">;</span>  <span class="token comment">// 从第一个元素开始，result指针是用来覆盖原数组的</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">++</span>first <span class="token operator">!=</span> last<span class="token punctuation">)</span>   <span class="token comment">// 直到最后一个元素</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>result <span class="token operator">!=</span> <span class="token operator">*</span>first<span class="token punctuation">)</span>    <span class="token comment">// 找到了一个不重复的元素</span>
+			<span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">++</span>result<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">*</span>first<span class="token punctuation">;</span>   <span class="token comment">// 覆盖前面的元素</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token operator">++</span>result<span class="token punctuation">;</span>          <span class="token comment">// 返回最后不重复元素的下一个元素的坐标的迭代器</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>从函数原型和模拟代码中不难看出，unique函数返回的是一个<mark>迭代器</mark>，这是一个指向去重后不包含重复元素序列中<mark>最后一个元素的下一个元素的位置</mark>的迭代器。并且，去重的原理是直接对原数组进行数值上的覆盖，<strong>把没有重复的元素覆盖到数组前端来，并不是将重复的元素移到数组后端去</strong>，所以，实际数组的长度并没有发生改变。</p>
+<p>假设有一个num[n]数组，我们现在使用unique对它进行去重，那么，我们利用unique返回迭代器的原理，利用如下代码可以获得去重后的数列的实际长度：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> num <span class="token operator">+</span> n<span class="token punctuation">)</span> <span class="token operator">-</span> num<span class="token punctuation">;</span>	<span class="token comment">//返回的迭代器减去初始地址，得到数组长度</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>对于vector容器，有：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> len<span class="token operator">=</span><span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">-</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//返回的迭代器减去初始地址，得到容器长度</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>对于vector容器，我们还可以结合erase函数将容器的长度真正减少到去重后的实际长度：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">num<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span><span class="token function">unique</span><span class="token punctuation">(</span>num<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> num<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//区间删除，删除unique返回的迭代器到容器真正末端迭代器的位置，这一段就是去重后理应废除掉的数组</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="查找（lower-bound）"><a href="#查找（lower-bound）" class="headerlink" title="查找（lower_bound）"></a>查找（lower_bound）</h3><p>STL库当中的lower_bound函数可以帮助我们进行元素的查找，使用的时候需要包含algorithm的头文件</p>
 
                 
             </div>
@@ -1047,7 +1091,7 @@ cout <span class="token operator">&lt;&lt;</span> ans<span class="token punctuat
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">17.5k</span>&nbsp;字
+                class="white-color">18.7k</span>&nbsp;字
             
             
             
