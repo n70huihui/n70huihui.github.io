@@ -297,7 +297,7 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #8fc0c5 0%, #5b9fa8 100%);
+    background-image: linear-gradient(to right, #889FE0 0%, #576690 100%);
 }
 
 .text-color {
@@ -313,7 +313,7 @@ mark {
     position: fixed;
     bottom: 0;
     z-index: 300;
-    background: linear-gradient(to right, #8fc0c5 0%, #5b9fa8 100%);
+    background: linear-gradient(to right, #889FE0 0%, #576690 100%);
     opacity: 0.8;
 }
 
@@ -443,8 +443,8 @@ header .side-nav .social-link {
 }
 
 .cover-btns a:hover {
-    border: 1px solid #8fc0c5;
-    background-color: #8fc0c5;
+    border: 1px solid #889FE0;
+    background-color: #889FE0;
     box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.42),
     0 4px 23px 0 rgba(0, 0, 0, 0.12),
     0 8px 10px -5px rgba(233, 30, 99, 0.2);
@@ -931,7 +931,7 @@ article a {
 
 article a:hover {
     font-weight: bold;
-    color: #4392e6;
+    color: #576690;
     text-decoration: underline;
 }
 
@@ -1114,7 +1114,7 @@ article .article-tags .chip {
     border-radius: 15px;
     margin-right: 5px;
     margin-bottom: 2px;
-    color: #66c5cf;
+    color: #889FE0;
     background: #fff;
     border: 1px solid;
     transition: all 0.6s ease-in-out;
@@ -1122,17 +1122,17 @@ article .article-tags .chip {
 
 #artDetail .tag_share .article-tag .chip:hover {
     color: #fff;
-    background: #66c5cf;
+    background: #889FE0;
 }
 
 #artDetail .post-cate {
     float: right;
-    color: #66c5cf;
+    color: #889FE0;
 }
 
 #artDetail .post-cate a {
     padding-right: 5px;
-    color: #66c5cf;
+    color: #889FE0;
     font-weight: 500;
 }
 
@@ -1151,7 +1151,7 @@ article .article-tags .chip {
 
 #artDetail .post-info .post-category:hover {
     font-weight: bold;
-    color: #66c5cf;
+    color: #889FE0;
     text-decoration: underline;
 }
 
@@ -1214,7 +1214,7 @@ article .article-tags .chip {
 
 #artDetail .reprint a {
     font-size: 1.05rem;
-    color: #66c5cf;
+    color: #889FE0;
     font-weight: 500;
 }
 
@@ -1230,7 +1230,7 @@ article .article-tags .chip {
 
 #articleContent a {
     padding: 0 2px;
-    color: #66c5cf;
+    color: #889FE0;
     font-weight: 500;
     text-decoration: underline;
     word-wrap: break-word;
@@ -1378,7 +1378,7 @@ thead {
 
 .chip-container .chip:hover {
     color: #fff;
-    background: linear-gradient(to right, #66c5cf 0%, #4392e6 100%) !important;
+    background: linear-gradient(to right, #889FE0 0%, #576690 100%) !important;
 }
 
 .chip .tag-length {
@@ -1454,7 +1454,7 @@ thead {
     left: 18px;
     height: 100%;
     width: 4px;
-    background: #8fc0c5;
+    background: #889FE0;
 }
 
 @media only screen and (min-width: 900px) {
@@ -1669,7 +1669,7 @@ thead {
 }
 
 .post-statis .statis .count a {
-    color: #5b9fa8;
+    color: #576690;
 }
 
 .post-statis .statis .name {
@@ -1690,8 +1690,8 @@ thead {
     margin: 0 0.5rem;
     padding: 0;
     color: #fff;
-    border: 1px solid #5b9fa8;
-    background: radial-gradient(#8fc0c5, #5b9fa8);
+    border: 1px solid #576690;
+    background: radial-gradient(#889FE0, #576690);
     font-size: 0.9rem;
     border-radius: 50%;
     box-shadow: 0 4px 6px rgba(50, 50, 93, .21), 0 2px 3px rgba(0, 0, 0, .1);
