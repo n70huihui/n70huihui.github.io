@@ -456,21 +456,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-09-03
+                    2023-10-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8.5k
+                    9.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    36 分
+                    39 分
                 </div>
                 
 
@@ -1157,6 +1157,29 @@ cout <span class="token operator">&lt;&lt;</span> dp<span class="token punctuati
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="全排列问题"><a href="#全排列问题" class="headerlink" title="全排列问题"></a>全排列问题</h2><p>给定一个数组 S = {1，2，3，……，n}，现欲打印其所有排列方式。</p>
+<p>C++ 的 STL 中有一个函数叫做 next_permutation 可以求全排列。具体为：<code>bool next_permutation(iterator start,iterator end)</code>。对应的，还有一个求前排列的 prev_permutation：<code>bool prev_permutation(iterator start,iterator end)</code>。接下来本节主要探讨这两个函数的底层实现。</p>
+<h3 id="全排列推导"><a href="#全排列推导" class="headerlink" title="全排列推导"></a>全排列推导</h3><p>假设我们现在S的总数为3，即 S = {1，2，3}。易得其部分全排列有：123，132，213，231，312，321。<strong>我们定义非递减排列是最小排列，非递增排列是最大排列。</strong>（此处不使用递增和递减的原因是考虑到若一个数列当中有重复元素出现，则不能称为严格意义上的递增递减。）</p>
+<p>我们观察132这个排列，132后面排上213是因为对于最后两位来讲，32已经是降序排列，是最大排列。对于后两位，已经没有其他比32更大的排列了，所以这个时候，我们需要增大排序位，从最后两位排列增大到三位的排列。那么，又该怎么排三位呢？观察到132变为了213，<strong>第一位从1变到了2</strong>，并且，13这个排列对于最后两位来讲，是一个<strong>最小排列</strong>。</p>
+<p>对此，我们可以得到一个规律：对于数组S = {$a_1$，$a_2$，$a_3$，……，$a_{i-1}$，$a_i$，$a_{i+1}$，……，$a_n$}，如果从$a_i$到$a_n$已经是一个最大排列，则将$a_{i-1}$与 “在$a_i$到$a_n$中大于$a_{i-1}$的最小的数” 进行交换。并且，$a_i$到$a_n$要变为一个最小排列。</p>
+<p>我们可以来思考如何实现这个规律：</p>
+<ul>
+<li>如何定位到$a_i$呢？很简单，注意到$a_i$到$a_n$已经是一个最大排列，前面的数会违背最大排列的排列规则，所以，$a_{i-1}$就是<strong>第一个违背最大排列的数</strong>。（$a_i &gt; a_{i-1}$）</li>
+<li>如何找到$a_i$到$a_n$中大于$a_{i-1}$的最小的数呢？我们通过之前的规律了解到：此时的$a_i$到$a_n$已经是一个最大排列了，而最大排列是一个降序的排列。所以，$a_i$到$a_n$中大于$a_{i-1}$的最小的数就是<strong>从右往左扫描过去的第一个大于$a_{i-1}$的数。</strong></li>
+<li>那么我们又如何将$a_i$到$a_n$要变为一个最小排列呢？可以证明，当我们进行上述的交换操作之后，$a_i$到$a_n$依旧是降序排列，这个时候，我们只需要将$a_i$到$a_n$<strong>逆序</strong>，即可得到其最小排列。</li>
+</ul>
+<p>了解到这里，就不难推出 next_permutation 和 prev_permutation 的底层原理了。</p>
+<h3 id="next-permutation-底层"><a href="#next-permutation-底层" class="headerlink" title="next_permutation 底层"></a>next_permutation 底层</h3><ul>
+<li>从右到左进行扫描，发现第一个违背非递减趋势的数字，称之为 Partition Number。</li>
+<li>从右到左进行扫描，发现第一个比 Partition Number 大的数，称之为 Change Number。</li>
+<li>交换 Partition Number 和 Change Number，而后逆序在原本 Partition Number 位置右侧的数。</li>
+</ul>
+<h3 id="prev-permutation-底层"><a href="#prev-permutation-底层" class="headerlink" title="prev_permutation 底层"></a>prev_permutation 底层</h3><ul>
+<li>从右到左进行扫描，发现第一个违背非递增趋势的数字，称之为 Partition Number。</li>
+<li>从右到左进行扫描，发现第一个比 Partition Number 小的数，称之为 Change Number。</li>
+<li>交换 Partition Number 和 Change Number，而后逆序在原本 Partition Number 位置右侧的数。</li>
+</ul>
+
                 
             </div>
             <hr/>
@@ -1581,7 +1604,7 @@ cout <span class="token operator">&lt;&lt;</span> dp<span class="token punctuati
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">46.6k</span>&nbsp;字
+                class="white-color">58.9k</span>&nbsp;字
             
             
             
@@ -1847,7 +1870,7 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/22.2017.summer.normal.2.model.json"},"display":{"position":"left","width":225,"height":450},"mobile":{"show":true},"log":false});</script>
+
         <style>
             [bg-lazy] {
                 background-image: none !important;
@@ -1860,6 +1883,6 @@ $(function () {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,c=(r.imageLazyLoadSetting.preloadRatio,n());function n(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=n());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight+240||document.documentElement.clientHeight+240)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),r.addEventListener("resize",a),r.addEventListener("orientationchange",a)}(this);</script></body>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,c=(r.imageLazyLoadSetting.preloadRatio,n());function n(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=n());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight+240||document.documentElement.clientHeight+240)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),r.addEventListener("resize",a),r.addEventListener("orientationchange",a)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/22.2017.summer.normal.2.model.json"},"display":{"position":"left","width":225,"height":450},"mobile":{"show":true},"log":false});</script></body>
 
 </html>
