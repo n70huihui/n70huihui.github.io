@@ -452,21 +452,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-11-23
+                    2023-11-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.5k
+                    8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    26 分
+                    32 分
                 </div>
                 
 
@@ -552,7 +552,7 @@
 <span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token keyword">COMMENT</span> 表注释<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
 <span class="token comment"># 示例</span>
-<span class="token keyword">create</span> <span class="token keyword">table</span> tb_user<span class="token punctuation">(</span>
+<span class="token keyword">create</span> <span class="token keyword">table</span> tb_user <span class="token punctuation">(</span>
     id <span class="token keyword">int</span> <span class="token keyword">comment</span> <span class="token string">'编号'</span><span class="token punctuation">,</span>
     name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">50</span><span class="token punctuation">)</span> <span class="token keyword">comment</span> <span class="token string">'姓名'</span><span class="token punctuation">,</span>
     age <span class="token keyword">int</span> <span class="token keyword">comment</span> <span class="token string">'年龄'</span><span class="token punctuation">,</span>
@@ -648,7 +648,7 @@
 </li>
 <li><p>设置别名：<code>select 字段1[as 别名1], 字段2[as 别名2], 字段3[as 别名3]... from 表名;</code> </p>
 </li>
-<li><p>去除重复记录：<code>select distinct 字段列表 from 表名;</code></p>
+<li><p>去除重复记录：<code>select distinct 字段列表 from 表名;</code><strong>（要去重哪个字段就在哪个字段前面加 distinct）</strong></p>
 </li>
 </ul>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">user</span> <span class="token keyword">values</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'test_name3'</span><span class="token punctuation">,</span> <span class="token number">19</span><span class="token punctuation">,</span> <span class="token string">'2023-11-28'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
@@ -833,6 +833,50 @@
 <p>DQL 语句的编写顺序：select、from、where、group by、having、order by、limit。</p>
 <p>DQL 语句的执行顺序：from、where、group by、having、select、order by、limit。</p>
 <p><mark>书写别名的时候需要格外注意执行顺序，否则可能导致编译不通过！</mark></p>
+<h5 id="关于返回-null-的问题："><a href="#关于返回-null-的问题：" class="headerlink" title="关于返回 null 的问题："></a>关于返回 null 的问题：</h5><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/biggest-single-number/description/">leetcode 只出现一次的最大数字</a></p>
+<p>先上题解：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/biggest-single-number/solutions/683252/dang-biao-ge-wei-kong-shi-ru-he-fan-hui-6qpzg/">传送门</a></p>
+<p>这里给出最后的表格：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>sum</th>
+<th>avg</th>
+<th>max</th>
+<th>min</th>
+<th>count</th>
+<th>ifnull</th>
+<th>select</th>
+<th>limit</th>
+<th>窗口函数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空表格</td>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+<td>0</td>
+<td>空</td>
+<td>（from）空；（\）null</td>
+<td>空</td>
+<td>null</td>
+</tr>
+<tr>
+<td>表格值为null</td>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+<td>0</td>
+<td>\</td>
+<td>null</td>
+<td>null</td>
+<td>null</td>
+</tr>
+</tbody></table>
+<p>故可以利用聚合函数或者不带 from 的 select 返回 null 值。</p>
 <h4 id="DCL"><a href="#DCL" class="headerlink" title="DCL"></a>DCL</h4><p>数据控制（Control）语言，用来创建数据库用户、控制数据库的访问权限。</p>
 <p><strong>管理用户</strong>：</p>
 <ul>
@@ -1133,6 +1177,14 @@
     chinese
 <span class="token keyword">from</span> score<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p><code>case...when...then</code> 语句还可以用来赋值：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">update</span> Salary
+<span class="token keyword">set</span> sex <span class="token operator">=</span> 
+    <span class="token keyword">case</span> sex <span class="token keyword">when</span> <span class="token string">'m'</span> <span class="token keyword">then</span> <span class="token string">'f'</span>
+    <span class="token keyword">else</span> <span class="token string">'m'</span>
+    <span class="token keyword">end</span><span class="token punctuation">;</span>
+ <span class="token comment"># 使用单条 update 语句将性别扭转</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><p>约束是作用于表中字段上的规则，用于限制存储在表中的数据。目的是为了保证数据库中数据的正确性、有效性和完整性。</p>
 <table>
 <thead>
@@ -1265,7 +1317,7 @@
 <span class="token keyword">select</span> e<span class="token punctuation">.</span>id<span class="token punctuation">,</span> e<span class="token punctuation">.</span>name<span class="token punctuation">,</span> e<span class="token punctuation">.</span>dept_id<span class="token punctuation">,</span> d<span class="token punctuation">.</span>name <span class="token keyword">from</span> emp e <span class="token keyword">inner</span> <span class="token keyword">join</span> dept d <span class="token keyword">on</span> e<span class="token punctuation">.</span>dept_id <span class="token operator">=</span> d<span class="token punctuation">.</span>id<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h4><ul>
-<li>左外连接：<code>select 字段列表 from 表1 left [outer] join 表2 on 条件...;</code>此时，查的是表1的所有信息与1、2表的交集。<strong>（常用）</strong></li>
+<li>左外连接：<code>select 字段列表 from 表1 left [outer] join 表2 on 条件...;</code>此时，查的是表1的所有信息与1、2表的交集。**（常用） ** <strong>一般来讲，外连接与内连接的区别在于外连接允许 null 值存在。</strong></li>
 <li>右外连接：<code>select 字段列表 from 表1 right [outer] join 表2 on 条件...;</code>此时，查的是表2的所有信息与1、2表的交集。</li>
 </ul>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 左外连接</span>
@@ -1282,7 +1334,8 @@
 <span class="token comment"># 多表查询 自连接</span>
 <span class="token keyword">select</span> e1<span class="token punctuation">.</span>id<span class="token punctuation">,</span> e1<span class="token punctuation">.</span>name<span class="token punctuation">,</span> e1<span class="token punctuation">.</span>manager_id<span class="token punctuation">,</span> e2<span class="token punctuation">.</span>name <span class="token keyword">from</span> emp e1 <span class="token keyword">left</span> <span class="token keyword">join</span> emp e2 <span class="token keyword">on</span> e2<span class="token punctuation">.</span>id <span class="token operator">=</span> e1<span class="token punctuation">.</span>manager_id<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h4><p>联合查询：union，union all。对于 union 查询，就是把多次查询的结果合并起来，形成一个新的查询结果。</p>
+<h4 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h4><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rearrange-products-table/description/">leetcode 每个产品在商店的不同价格</a></p>
+<p>联合查询：union，union all。对于 union 查询，就是把多次查询的结果合并起来，形成一个新的查询结果。</p>
 <p>语法：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表<span class="token number">1.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 <span class="token keyword">union</span> <span class="token punctuation">[</span><span class="token keyword">all</span><span class="token punctuation">]</span>
@@ -1301,7 +1354,7 @@
 <li>表子查询（子查询结果为多行多列）。</li>
 </ul>
 <p>根据子查询的位置，分为：where 之后， from 之后， select 之后。</p>
-<p><strong>标量子查询</strong>：子查询的结果为单个值（数字、字符串、日期等），最简单的形式，这种子查询成为标量子查询。</p>
+<p><strong>标量子查询</strong>：查询的 where 条件为单个值（数字、字符串、日期等），最简单的形式，这种子查询成为标量子查询。</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 查询研发部的员工信息</span>
 <span class="token comment"># 先查询研发部的部门id</span>
 <span class="token keyword">select</span> id <span class="token keyword">from</span> dept <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'研发部'</span><span class="token punctuation">;</span>
@@ -1315,7 +1368,7 @@
 <span class="token comment"># 查询在test2入职之后入职的员工</span>
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> emp_date <span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token keyword">select</span> emp_date <span class="token keyword">from</span> emp <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'test2'</span><span class="token punctuation">)</span> <span class="token keyword">order</span> <span class="token keyword">by</span> emp_date<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>列子查询</strong>：子查询结果为一列，常用操作符为in、not in、any、some、all。</p>
+<p><strong>列子查询</strong>：查询的 where 条件为一列，常用操作符为in、not in、any、some、all。</p>
 <p>其中：</p>
 <table>
 <thead>
@@ -1366,7 +1419,192 @@
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> salary <span class="token operator">&gt;</span> <span class="token keyword">all</span><span class="token punctuation">(</span><span class="token keyword">select</span> salary <span class="token keyword">from</span> emp <span class="token keyword">where</span> dept_id <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment"># 也可以用max实现</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p><strong>行子查询</strong>：查询的 where 条件是一行（可以是多列）。</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 查询test4的薪资及直属领导相同的员工信息</span>
+<span class="token comment"># 查询test4的薪资及直属领导</span>
+<span class="token keyword">select</span> salary<span class="token punctuation">,</span> manager_id <span class="token keyword">from</span> emp <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'test4'</span><span class="token punctuation">;</span>
 
+<span class="token comment"># 查询与test4薪资及直属领导相同的员工信息</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> salary <span class="token operator">=</span> <span class="token number">2500</span> <span class="token operator">&amp;&amp;</span> manager_id <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 可以使用类似于集合的方式编写上述语句</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> <span class="token punctuation">(</span>salary<span class="token punctuation">,</span> manager_id<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2500</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 利用select置换</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> <span class="token punctuation">(</span>salary<span class="token punctuation">,</span> manager_id<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">select</span> salary<span class="token punctuation">,</span> manager_id <span class="token keyword">from</span> emp <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'test4'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>表子查询</strong>：查询的 where 条件是多行多列。</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 查询与test4,test6的职位和薪资相同的员工信息</span>
+<span class="token comment"># 查询与二者相同的职位和薪资</span>
+<span class="token keyword">select</span> dept_id<span class="token punctuation">,</span> salary <span class="token keyword">from</span> emp <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'test4'</span> <span class="token operator">||</span> name <span class="token operator">=</span> <span class="token string">'test6'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 查询与二者信息相同的员工</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> salary <span class="token operator">in</span><span class="token punctuation">(</span><span class="token number">2500</span><span class="token punctuation">,</span> <span class="token number">4000</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> dept_id <span class="token operator">in</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 可以利用类似于集合的方式编写上述语句</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> <span class="token punctuation">(</span>dept_id<span class="token punctuation">,</span> salary<span class="token punctuation">)</span> <span class="token operator">in</span><span class="token punctuation">(</span><span class="token keyword">select</span> dept_id<span class="token punctuation">,</span> salary <span class="token keyword">from</span> emp <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'test4'</span> <span class="token operator">||</span> name <span class="token operator">=</span> <span class="token string">'test6'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 查询入职时间在2023-03-22之后的员工的部门信息</span>
+<span class="token comment"># 查询在2023-03-22之后入职的员工信息</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> emp_date <span class="token operator">&gt;</span> <span class="token string">'2023-03-22'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 查询其对应的部门信息</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> emp_date <span class="token operator">&gt;</span> <span class="token string">'2023-03-22'</span><span class="token punctuation">)</span> e <span class="token keyword">left</span> <span class="token keyword">join</span> dept d <span class="token keyword">on</span> e<span class="token punctuation">.</span>dept_id <span class="token operator">=</span> d<span class="token punctuation">.</span>id<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><h4 id="事务简介"><a href="#事务简介" class="headerlink" title="事务简介"></a>事务简介</h4><p>事务是一组操作的集合，它是一个不可分割的工作单位，事务会把所有的操作作为一个整体一起向系统提交或撤销操作请求，即这些操作要么同时成功，要么同时失败。</p>
+<p>举例：A向B转1000块。</p>
+<p>操作集合为:</p>
+<ul>
+<li>查询A的账户是否有1000块。</li>
+<li>如果有，A的账户的余额减去1000。</li>
+<li>之后B的账户余额加1000。</li>
+</ul>
+<p>如果其中有一步抛出异常，则需要<strong>整组操作判为失败</strong>。否则可能会出现A的账户余额减去1000后B的账户余额没有改变的情况。</p>
+<p>MySQL 默认下的事物是自动提交的，也就是说，当执行一条 DML 语句，MySQL 会立即隐式的提交事务。</p>
+<h4 id="事务操作"><a href="#事务操作" class="headerlink" title="事务操作"></a>事务操作</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 查看 / 设置事务提交方式</span>
+<span class="token keyword">select</span> @<span class="token variable">@autocommit</span><span class="token punctuation">;</span>
+<span class="token keyword">set</span> @<span class="token variable">@autocommit</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 提交事务</span>
+<span class="token keyword">commit</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 回滚事务</span>
+<span class="token keyword">rollback</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>示例：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 转账操作</span>
+<span class="token comment"># 1. 查询张三账户的余额</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'张三'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 2. 将张三账户的余额 -1000</span>
+<span class="token keyword">update</span> account <span class="token keyword">set</span> money <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">1000</span> <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'张三'</span><span class="token punctuation">;</span>
+<span class="token comment"># 假设这里抛出异常了，会导致下方语句无法执行</span>
+
+<span class="token comment"># 3. 将李四账户的余额 +1000</span>
+<span class="token keyword">update</span> account <span class="token keyword">set</span> money <span class="token operator">=</span> money <span class="token operator">+</span> <span class="token number">1000</span> <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'李四'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 查看事务提交方式 1 -&gt; 自动提交 0 -&gt; 手动提交</span>
+<span class="token keyword">select</span> @<span class="token variable">@autocommit</span><span class="token punctuation">;</span>
+<span class="token keyword">set</span> @<span class="token variable">@autocommit</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+
+<span class="token comment"># 修复数据</span>
+<span class="token keyword">update</span> account <span class="token keyword">set</span> money <span class="token operator">=</span> <span class="token number">2000</span> <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'张三'</span> <span class="token operator">or</span> name <span class="token operator">=</span> <span class="token string">'李四'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 转账操作</span>
+<span class="token comment"># 1. 查询张三账户的余额</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'张三'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 2. 将张三账户的余额 -1000</span>
+<span class="token keyword">update</span> account <span class="token keyword">set</span> money <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">1000</span> <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'张三'</span><span class="token punctuation">;</span>
+<span class="token comment"># 假设这里抛出异常了，会导致下方语句无法执行</span>
+
+<span class="token comment"># 3. 将李四账户的余额 +1000</span>
+<span class="token keyword">update</span> account <span class="token keyword">set</span> money <span class="token operator">=</span> money <span class="token operator">+</span> <span class="token number">1000</span> <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'李四'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 设置@@autocommit = 0之后，执行完上述转账操作后，数据并不会马上更改</span>
+<span class="token comment"># 此时需要执行commit提交事务，数据才会被更改</span>
+
+<span class="token comment"># 只有执行了commit，数据才会被更改</span>
+<span class="token keyword">commit</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 如果抛出异常，可以用rollback回滚事务</span>
+<span class="token keyword">rollback</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当设置事务提交方式之后，只有当执行 <code>commit</code> 语句之后数据<strong>才会被真正更改</strong>！</p>
+<p>还可以使用指令来对事务进行操作：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 开启事务</span>
+<span class="token keyword">start</span> <span class="token keyword">transaction</span> 或 <span class="token keyword">begin</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 提交事务</span>
+<span class="token keyword">commit</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 回滚事务</span>
+<span class="token keyword">rollback</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 开启事务</span>
+<span class="token keyword">start</span> <span class="token keyword">transaction</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 转账操作</span>
+<span class="token comment"># 1. 查询张三账户的余额</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> account <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'张三'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 2. 将张三账户的余额 -1000</span>
+<span class="token keyword">update</span> account <span class="token keyword">set</span> money <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">1000</span> <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'张三'</span><span class="token punctuation">;</span>
+<span class="token comment"># 假设这里抛出异常了，会导致下方语句无法执行</span>
+
+<span class="token comment"># 3. 将李四账户的余额 +1000</span>
+<span class="token keyword">update</span> account <span class="token keyword">set</span> money <span class="token operator">=</span> money <span class="token operator">+</span> <span class="token number">1000</span> <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'李四'</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 提交事务</span>
+<span class="token keyword">commit</span><span class="token punctuation">;</span>
+
+<span class="token comment"># 回滚事务</span>
+<span class="token keyword">rollback</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="事务四大特性ACID"><a href="#事务四大特性ACID" class="headerlink" title="事务四大特性ACID"></a>事务四大特性ACID</h4><ul>
+<li>原子性（Atomictiy）：事务是不可分割的最小操作单元，要么全部成功，要么全部失败。</li>
+<li>一致性（Consistency）：事务完成时，都必须使所有的数据都保持一致状态。</li>
+<li>隔离性（Isolation）：数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境下运行。</li>
+<li>持久性（Durability）：事务一旦提交或回滚，它对数据库的数据的改变就是永久的。</li>
+</ul>
+<h4 id="并发事务问题"><a href="#并发事务问题" class="headerlink" title="并发事务问题"></a>并发事务问题</h4><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>脏读</td>
+<td>一个事务读到另一个事务还没有提交的数据</td>
+</tr>
+<tr>
+<td>不可重复读</td>
+<td>一个事务先后读取同一条记录，但两次读取的数据不同</td>
+</tr>
+<tr>
+<td>幻读</td>
+<td>一个事务按照条件查询数据时，没有对应的数据行，但是在插入数据时，又发现这行数据已经存在，好像出现了“幻影”</td>
+</tr>
+</tbody></table>
+<h4 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h4><table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Read uncommited</code></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td><code>Read commited</code></td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td><code>Repeatable Read</code>（MySQL 默认）</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td><code>Serializable</code></td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody></table>
+<p> 查看事务隔离级别：<code>select @@transaction_isolation;</code></p>
+<p>设置事务隔离级别：<code>set [session | global] transaction isolation level {read uncommitted | read commited | repeatable read | serializable}</code></p>
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2>
                 
             </div>
             <hr/>
@@ -1773,7 +2011,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">58.9k</span>&nbsp;字
+                class="white-color">60.4k</span>&nbsp;字
             
             
             
@@ -2039,7 +2277,7 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/22.2017.summer.normal.2.model.json"},"display":{"position":"left","width":225,"height":450},"mobile":{"show":true},"log":false});</script>
         <style>
             [bg-lazy] {
                 background-image: none !important;
@@ -2052,6 +2290,6 @@ $(function () {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,c=(r.imageLazyLoadSetting.preloadRatio,n());function n(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=n());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight+240||document.documentElement.clientHeight+240)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),r.addEventListener("resize",a),r.addEventListener("orientationchange",a)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/22.2017.summer.normal.2.model.json"},"display":{"position":"left","width":225,"height":450},"mobile":{"show":true},"log":false});</script></body>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,c=(r.imageLazyLoadSetting.preloadRatio,n());function n(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=n());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight+240||document.documentElement.clientHeight+240)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),r.addEventListener("resize",a),r.addEventListener("orientationchange",a)}(this);</script></body>
 
 </html>
