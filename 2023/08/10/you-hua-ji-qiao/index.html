@@ -424,6 +424,10 @@
                                 <span class="chip bg-color">C++</span>
                             </a>
                         
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
                             <a href="/tags/%E7%AE%97%E6%B3%95/">
                                 <span class="chip bg-color">算法</span>
                             </a>
@@ -460,21 +464,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-10-26
+                    2023-12-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.4k
+                    4.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    13 分
+                    16 分
                 </div>
                 
 
@@ -543,6 +547,7 @@ cin<span class="token punctuation">.</span><span class="token function">tie</spa
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="查找与删除"><a href="#查找与删除" class="headerlink" title="查找与删除"></a>查找与删除</h2><p>C++当中，map和set的底层是红黑树，查找的时间复杂度是O（logn），如果觉得该时间复杂度还是不够优秀，需要再优化时间复杂度时，可以考虑使用<mark>unordered_map或者unordered_set</mark>，其底层是散列哈希，查找时间复杂度在数据量较小的情况下可以到O（1），但是毕竟还是散列哈希，所以数据量太大的情况下查找的时间复杂度有可能会退化到O（n）。此外，假设需要在一个顺序表中进行O（logn）或者O（1）级别的<mark>定位删除</mark>，可以考虑使用 list 存储数据，利用 list 的<mark>链式</mark>存储特性，<mark>用一个map或者是unordered_map来维护 list 对应的迭代器</mark>，即：<code>map&lt;datatype, list&lt;datatype&gt;::iterator&gt;</code>或者<code>unordered_map&lt;datatype, list&lt;datatype&gt;::iterator&gt;</code>，而后若要删除数据，可以直接利用map构建的映射关系找到迭代器，迅速定位到要删除的元素并将其删除。</p>
+<p>而在 Java 当中，LinkedHashMap 为我们提供了一个带有链表性质的哈希表，可以直接使用。如果不允许使用的话，因为Java 的语言限制，我们只好手撕双向链表，然后对 ListNode 进行维护。</p>
 <h2 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h2><h3 id="一维前缀和"><a href="#一维前缀和" class="headerlink" title="一维前缀和"></a>一维前缀和</h3><p>定义两个数列{$a_n$}和{$S_n$}，数列{$S_n$}表示数列{$a_n$}的前n项和，其中有：</p>
 <p>$$<br>S_n=\sum_{i=1}^{n}a_i<br>$$</p>
 <p>记$S_{ij}$表示$a_i$到$a_j$的区间和，则有：</p>
@@ -811,6 +816,60 @@ vector<span class="token operator">&lt;</span>ll<span class="token operator">&gt
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h2 id="链表环的判定"><a href="#链表环的判定" class="headerlink" title="链表环的判定"></a>链表环的判定</h2><p>链表环的判定一般使用快慢指针。根据追及原理易得，如果链表存在环，则快慢指针会在环中相遇。</p>
+<p>设置两个指针，使得其中一个指针的遍历速度是2，另一个指针的遍历速度是1。设环的入口到表头的距离为 K，快慢指针在离环入口处 X 相遇，环的总长度为 X + Y。再假设快慢指针相遇前，慢指针在环中走了 n 圈，快指针在环中走了 N 圈。</p>
+<p>则慢指针总距离为：$Distance_{slow} = K + n(X+Y)+X$</p>
+<p>快指针总举例为：$Distance_{fast}=K+N(X+Y)+X$</p>
+<p>二者走了相同时间，又$v_{fast}=2v_{slow}$，故$2Distance_{slow}=Distance_{fast}$</p>
+<p>最终：$2K+2n(X+Y)+2X=K+N(X+Y)+X$</p>
+<p>整理得：$K=(N-2n)(X+Y)-X$</p>
+<p>该条式子中，N-2n 为整数，故当我们在快慢指针相遇后，将快指针重新放入表头并以相同的速度与慢指针同时遍历后，二者再次相遇的位置就是环入口。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token class-name">ListNode</span> <span class="token function">detectCycle</span><span class="token punctuation">(</span><span class="token class-name">ListNode</span> head<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>head <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>	<span class="token comment">//先对链表判空</span>
+        <span class="token class-name">ListNode</span> fast <span class="token operator">=</span> head<span class="token punctuation">,</span> slow <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        <span class="token keyword">do</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>fast <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>	<span class="token comment">//判空</span>
+            fast <span class="token operator">=</span> fast<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>fast <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>	<span class="token comment">//判空，如果fast为null，表示链表没有环</span>
+            fast <span class="token operator">=</span> fast<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">while</span><span class="token punctuation">(</span>fast <span class="token operator">!=</span> slow<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">ListNode</span> p <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>p <span class="token operator">!=</span> slow<span class="token punctuation">)</span> <span class="token punctuation">{</span>	<span class="token comment">//p与慢指针同时遍历，相遇的时候就是链表环的入口</span>
+            slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            p <span class="token operator">=</span> p<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="原地哈希"><a href="#原地哈希" class="headerlink" title="原地哈希"></a>原地哈希</h2><p>一般用于对值域要求比较苛刻，需要找一组到数据范围0~n-1的映射，并且尽量减少冲突时，可以使用原地哈希。</p>
+<p>原地哈希实际上时利用了废弃空间的一种原地算法。</p>
+<p><strong>例题</strong>：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-all-duplicates-in-an-array/description/">数组中重复的数据</a></p>
+<p><strong>题目描述</strong>：给你一个长度为 <code>n</code> 的整数数组 <code>nums</code> ，其中 <code>nums</code> 的所有整数都在范围 <code>[1, n]</code> 内，且每个整数出现 <strong>一次</strong> 或 <strong>两次</strong> 。请你找出所有出现 <strong>两次</strong> 的整数，并以数组形式返回。</p>
+<p>你必须设计并实现一个时间复杂度为 <code>O(n)</code> 且仅使用常量额外空间的算法解决此问题。</p>
+<p><strong>思路</strong>：</p>
+<ol>
+<li>交换位置：将每一个数都交换到对应的原本位置上，当交换位置产生冲突时，代表数据重复。</li>
+<li><strong>正负标记</strong>：与交换位置思路类似，这次利用负号表示该位置的元素被占用。相当于<strong>利用正负进行原地哈希</strong>。因为涉及到正负号，所以取值的时候需要注意调用<code>abs</code>方法取绝对值。</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> <span class="token function">findDuplicates</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> ansList <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">abs</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//取数，注意abs取绝对值</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>index <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                nums<span class="token punctuation">[</span>index <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">*=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>  <span class="token comment">//负号标记，原地哈希</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                ansList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> ansList<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -877,6 +936,10 @@ vector<span class="token operator">&lt;</span>ll<span class="token operator">&gt
                             
                                 <a href="/tags/C/">
                                     <span class="chip bg-color">C++</span>
+                                </a>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
                                 </a>
                             
                                 <a href="/tags/%E7%AE%97%E6%B3%95/">
@@ -1219,7 +1282,7 @@ vector<span class="token operator">&lt;</span>ll<span class="token operator">&gt
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023</span>
+                <span id="year">2023-2024</span>
             
             <span id="year">2023</span>
             <a href="/about" target="_blank">热心市民灰灰</a>
@@ -1228,7 +1291,7 @@ vector<span class="token operator">&lt;</span>ll<span class="token operator">&gt
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">76.2k</span>&nbsp;字
+                class="white-color">109k</span>&nbsp;字
             
             
             
