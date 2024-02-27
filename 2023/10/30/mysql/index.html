@@ -452,21 +452,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-11-28
+                    2024-02-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8k
+                    14.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    32 分
+                    56 分
                 </div>
                 
 
@@ -621,7 +621,18 @@
 <p>删除数据：<code>delete from 表名 [where 条件]</code></p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delete</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> age <span class="token operator">=</span> <span class="token number">18</span><span class="token punctuation">;</span> <span class="token comment"># 删掉表中所有age = 18的数据</span>
 
-<span class="token keyword">delete</span> <span class="token keyword">from</span> <span class="token keyword">user</span><span class="token punctuation">;</span>  <span class="token comment"># 删掉表中的所有数据</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">delete</span> <span class="token keyword">from</span> <span class="token keyword">user</span><span class="token punctuation">;</span>  <span class="token comment"># 删掉表中的所有数据</span>
+
+<span class="token comment"># 多表连接时的删除语句</span>
+<span class="token keyword">delete</span> a
+<span class="token keyword">from</span> 
+	tablename <span class="token keyword">as</span> a
+<span class="token keyword">left</span> <span class="token keyword">join</span> 
+	temp_name <span class="token keyword">as</span> b
+<span class="token keyword">on</span> 
+	a<span class="token punctuation">.</span>ID <span class="token operator">=</span> b<span class="token punctuation">.</span>ID
+<span class="token keyword">where</span> 
+	b<span class="token punctuation">.</span>ID <span class="token operator">is</span> <span class="token operator">not</span> <span class="token boolean">null</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>小结：</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">insert</span> <span class="token keyword">into</span> <span class="token keyword">user</span> <span class="token keyword">values</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">'test_name0'</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token string">'2023-11-18'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
@@ -833,7 +844,8 @@
 <p>DQL 语句的编写顺序：select、from、where、group by、having、order by、limit。</p>
 <p>DQL 语句的执行顺序：from、where、group by、having、select、order by、limit。</p>
 <p><mark>书写别名的时候需要格外注意执行顺序，否则可能导致编译不通过！</mark></p>
-<h5 id="关于返回-null-的问题："><a href="#关于返回-null-的问题：" class="headerlink" title="关于返回 null 的问题："></a>关于返回 null 的问题：</h5><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/biggest-single-number/description/">leetcode 只出现一次的最大数字</a></p>
+<p><strong>关于返回 null 的问题</strong></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/biggest-single-number/description/">leetcode 只出现一次的最大数字</a></p>
 <p>先上题解：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/biggest-single-number/solutions/683252/dang-biao-ge-wei-kong-shi-ru-he-fan-hui-6qpzg/">传送门</a></p>
 <p>这里给出最后的表格：</p>
 <table>
@@ -1317,7 +1329,7 @@
 <span class="token keyword">select</span> e<span class="token punctuation">.</span>id<span class="token punctuation">,</span> e<span class="token punctuation">.</span>name<span class="token punctuation">,</span> e<span class="token punctuation">.</span>dept_id<span class="token punctuation">,</span> d<span class="token punctuation">.</span>name <span class="token keyword">from</span> emp e <span class="token keyword">inner</span> <span class="token keyword">join</span> dept d <span class="token keyword">on</span> e<span class="token punctuation">.</span>dept_id <span class="token operator">=</span> d<span class="token punctuation">.</span>id<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h4><ul>
-<li>左外连接：<code>select 字段列表 from 表1 left [outer] join 表2 on 条件...;</code>此时，查的是表1的所有信息与1、2表的交集。**（常用） ** <strong>一般来讲，外连接与内连接的区别在于外连接允许 null 值存在。</strong></li>
+<li>左外连接：<code>select 字段列表 from 表1 left [outer] join 表2 on 条件...;</code>此时，查的是表1的所有信息与1、2表的交集。<strong>（常用）  一般来讲，外连接与内连接的区别在于外连接允许 null 值存在。</strong></li>
 <li>右外连接：<code>select 字段列表 from 表1 right [outer] join 表2 on 条件...;</code>此时，查的是表2的所有信息与1、2表的交集。</li>
 </ul>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 左外连接</span>
@@ -1451,6 +1463,67 @@
 <span class="token comment"># 查询其对应的部门信息</span>
 <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> emp <span class="token keyword">where</span> emp_date <span class="token operator">&gt;</span> <span class="token string">'2023-03-22'</span><span class="token punctuation">)</span> e <span class="token keyword">left</span> <span class="token keyword">join</span> dept d <span class="token keyword">on</span> e<span class="token punctuation">.</span>dept_id <span class="token operator">=</span> d<span class="token punctuation">.</span>id<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h3><p>聚合函数将同一个分组内的多行数据汇总成单个结果，窗口函数则保留了所有的原始数据。<strong>窗口函数一般用在处理排名问题（每个部门的薪资排名）和 TOPN 问题（查每个部门的排名第一）中。</strong></p>
+<p>窗口函数语法：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">window_function([expression]) over (
+    partition by...
+    order by...
+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其中 window_function 是窗口函数的名称，expression 是可选的分析对象（字段名或者表达式），over 子句包含分区（partition by）、排序（order by）以及窗口大小（frame_clause）3个选项。</p>
+<p><strong>创建数据分区</strong></p>
+<p>例如，以下语句按照不同部门分别统计员工的月薪合计（类似于 group by）：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select
+	emp_name,
+	salary,
+	dept_id,
+	sum(salary) over (
+    	partition by dept_id
+    )
+from emp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>分区内排序</strong></p>
+<p>排序选项通常用于数据的分类排名，例如以下语句用于分析员工在部门内的月薪排名：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select
+	emp_name,
+	salary,
+	dept_id,
+	sum(salary) over (
+    	partition by dept_id
+        order by salary desc
+    )
+from emp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>序号函数（常用）</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>row_number()</td>
+<td>顺序排序，最朴素的排序方式，例如：1、2、3</td>
+</tr>
+<tr>
+<td>rank()</td>
+<td>并列排序，会跳过重复的序号，例如：1、1、3</td>
+</tr>
+<tr>
+<td>dense_rank()</td>
+<td>并列排序，不会跳过重复的序号，例如：1、1、2</td>
+</tr>
+</tbody></table>
+<p>如下便是利用窗口函数中的 <code>rank()</code> 函数对数据库的数据按照 <code>salary</code> 进行排序并且跳过重复序号。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select  *,
+    rank() over(
+        partition by dept_id
+        order by salary
+    )
+from emp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>窗口函数还有很多其他特定函数，这里不一一列举。</p>
 <h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><h4 id="事务简介"><a href="#事务简介" class="headerlink" title="事务简介"></a>事务简介</h4><p>事务是一组操作的集合，它是一个不可分割的工作单位，事务会把所有的操作作为一个整体一起向系统提交或撤销操作请求，即这些操作要么同时成功，要么同时失败。</p>
 <p>举例：A向B转1000块。</p>
 <p>操作集合为:</p>
@@ -1604,8 +1677,423 @@
 </tbody></table>
 <p> 查看事务隔离级别：<code>select @@transaction_isolation;</code></p>
 <p>设置事务隔离级别：<code>set [session | global] transaction isolation level {read uncommitted | read commited | repeatable read | serializable}</code></p>
-<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><p>未完待续。</p>
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><h3 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h3><h4 id="MySQL-体系结构"><a href="#MySQL-体系结构" class="headerlink" title="MySQL 体系结构"></a>MySQL 体系结构</h4><ul>
+<li>连接层：进行客户端连接以及完成认证处理、授权等操作。</li>
+<li>服务层：SQL 接口、查询解析器、查询优化器、缓存等均在服务层实现。</li>
+<li>引擎层：可插拔存储引擎，控制 MySQL 数据的存储和提取方式。（<strong>索引是在存储引擎层实现的，InnoDB 是 MySQL 5.5版本之后的默认引擎</strong>）</li>
+<li>存储层：磁盘中存储着数据库当中的数据，包括了日志、文件等。</li>
+</ul>
+<h4 id="存储引擎简介"><a href="#存储引擎简介" class="headerlink" title="存储引擎简介"></a>存储引擎简介</h4><p>存储引擎是 MySQL 数据库特有的，是存储数据、建立索引、更新 / 查询数据等技术的实现方式。<strong>存储引擎是基于表的</strong>，而不是基于库的，所以存储引擎也可被称为表类型。</p>
+<p>在建表时，指定存储引擎：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE 表名(
+#	...
+) ENGINE = INNODB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 查询建表语句 默认选择InnoDB引擎
+show create table account;
+
+# 查询当前数据库支持的引擎
+show engines;
+
+# 创建表并指定存储引擎
+create table my_myisam(
+    id int,
+    name varchar(10)
+) engine = MYISAM;
+
+create table my_memory(
+    id int,
+    name varchar(10)
+) engine = Memory;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="存储引擎特点"><a href="#存储引擎特点" class="headerlink" title="存储引擎特点"></a>存储引擎特点</h4><p>InnoDB 引擎是一种兼顾高可靠性和高性能的通用存储引擎。其特点为：</p>
+<ul>
+<li>DML 操作遵循 ACID 模型，支持<strong>事务</strong>。</li>
+<li><strong>行级锁</strong>，提高并发访问性能。</li>
+<li>支持<strong>外键</strong>约束，保证数据的完整性和正确性。</li>
+</ul>
+<p><mark>上述几个加粗关键字也是 InnoDB 与其他引擎的区别。</mark></p>
+<p>InnoDB 引擎的每张表都会对应一个表空间文件（扩展名为 ibd），存储该表的表结构（frm、sdi）、数据和索引。<code>参数：innodb_file_per_tabel</code>。</p>
+<p>InnoDB 的逻辑存储结构（从大到小）：</p>
+<ol>
+<li>表空间（TableSpace）。</li>
+<li>段（Segment）。</li>
+<li>区（Extent，大小 1M）。</li>
+<li>页（Page，大小 16K）。</li>
+<li>行（Row）。</li>
+</ol>
+<p>其中，行还包括了最后一次操作事务的 id（Trx id）、指针（Roll pointer）以及字段（col）。</p>
+<h4 id="其他存储引擎"><a href="#其他存储引擎" class="headerlink" title="其他存储引擎"></a>其他存储引擎</h4><p><strong>MyISAM</strong></p>
+<p>是早期的 MySQL 引擎，特点：</p>
+<ul>
+<li>不支持事务，不支持外键。</li>
+<li>支持表锁，不支持行锁。</li>
+<li>访问速度快。</li>
+</ul>
+<p>涉及到的文件有三个，扩展名分别为：sdi（存放表结构信息）、myd（存放数据）、myi（存放索引）。</p>
+<p><strong>Memory</strong></p>
+<p>Memory 引擎的数据存储在磁盘中，受到硬件问题，只能将这些表作为临时表或者缓存使用。特点：</p>
+<ul>
+<li>内存存放。</li>
+<li>支持 Hash 索引（默认）。</li>
+</ul>
+<p>文件扩展名为 sdi，只存放表结构数据，表中具体数据存放在磁盘中。</p>
+<h4 id="存储引擎选择"><a href="#存储引擎选择" class="headerlink" title="存储引擎选择"></a>存储引擎选择</h4><p><strong>InnoDB</strong>：是 Mysql 的默认存储引擎，支持事务、外键。如果应用<strong>对事务的完整性有比较高</strong>的要求，在<strong>并发</strong>条件下要求数据的一致性，数据操作除了插入和查询之外，还包含很多的更新、删除操作，那么 InnoDB 存储引擎是比较合适的选择。</p>
+<p>MyISAM：如果应用是<strong>以读操作和插入操作</strong>为主，只有很少的更新和删除操作，并且对事务的完整性、并发性要求不是很高，那么选择这个存储引擎是非常合适的（例如日志、评论相关数据可以使用，目前被 MangoDB 取代）。</p>
+<p>MEMORY：将所有数据保存在内存中，访问速度快，通常用于<strong>临时表及缓存</strong>。MEMORY 的缺陷就是对表的大小有限制，太大的表无法缓存在内存中，而且无法保障数据的安全性（目前被 Redis 取代）。</p>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p><strong>索引是</strong>帮助 MySQL 高效获取数据的<strong>数据结构</strong>（有序）。在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式指向数据，这样就可以在这些数据结构上实现高效的查找算法，这种数据结构就是索引。</p>
+<ul>
+<li>优点：帮助我们提高查找数据的效率，降低 IO 成本。通过索引列对数据进行排序，降低数据排序的成本，降低 CPU 的消耗成本。</li>
+<li>缺点：索引也是要占用磁盘空间的，且索引会降低更新表的速度，当进行插入、删除等操作的时候，需要去维护结构的更新，效率会降低。</li>
+</ul>
+<h4 id="索引结构"><a href="#索引结构" class="headerlink" title="索引结构"></a>索引结构</h4><table>
+<thead>
+<tr>
+<th>索引结构</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>B+ Tree 索引</strong></td>
+<td>最常见的索引类型，大部分引擎都支持</td>
+</tr>
+<tr>
+<td>Hash 索引</td>
+<td>使用哈希表实现，只有精确匹配索引列的查询才有效（=，in），不支持范围查询（between、&lt;、&gt;、…）和排序操作</td>
+</tr>
+<tr>
+<td>R-tree 空间索引</td>
+<td>MyISAM 的特殊索引类型，只要用于地理空间数据类型，使用较少</td>
+</tr>
+<tr>
+<td>Full-text 全文索引</td>
+<td>是一种通过建立倒排索引，快速匹配文档的方式，类似于 Lucene，Solr，ES</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>索引</th>
+<th>InnoDB</th>
+<th>MyISAM</th>
+<th>Memory</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B+ Tree</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>Hash</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>R-tree</td>
+<td>不支持</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>Full-text</td>
+<td>5.6 版本后支持</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+</tbody></table>
+<h4 id="B-Tree-和-B-Tree"><a href="#B-Tree-和-B-Tree" class="headerlink" title="B-Tree 和 B+Tree"></a>B-Tree 和 B+Tree</h4><p>B 树和 B+ 树可以看<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1CU4y1G72e/?spm_id_from=333.999.0.0&amp;vd_source=664429be53bbd81b6ef5e987e4b5c17a">印度大佬的视频</a>学习。</p>
+<p>一个度数为 n 的B树，每个节点有 n 个指针（对应有 n 个子节点），有 n-1 个key，对应 n-1 个数据。当节点度数满了之后，再次插入遵循<strong>中间节点裂变</strong>的规则进行调整，即靠中间的数据向上分裂（可能发生与上层节点合并的情况），两侧数据挂两边（可能出现数据挂在上层节点的情况）。</p>
+<p>B+ 树中，所有元素都会出现在叶子节点，上侧的非叶子节点只是起到索引作用，最下方的叶子节点形成了一个<strong>单向链表</strong>。即向上裂变的时候生成一个新的数据裂变上去，保证叶子节点和索引都有该数据。</p>
+<p>MySQL 中的 B+ 树使用<strong>双向链表</strong>维护叶子节点，提高查找效率。</p>
+<p>B 树和 B+ 树的节点均存放在页中，相对于 B 树来讲，B+ 树的节点空间利用率更高（只有叶子节点有数据），故 B+ 树可以容纳更多数据。对于 B+ 树，3层高的树大概可以存储2000万条记录。</p>
+<h4 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h4><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>含义</th>
+<th>特点</th>
+<th>关键字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主键索引</td>
+<td>针对于表中主键创建的索引</td>
+<td>默认自动创建，只能有一个</td>
+<td>primary</td>
+</tr>
+<tr>
+<td>唯一索引</td>
+<td>避免同一个表中某数据列中的数据重复</td>
+<td>可以有多个</td>
+<td>unique</td>
+</tr>
+<tr>
+<td>常规索引</td>
+<td>快速定位特定数据</td>
+<td>可以有多个</td>
+<td></td>
+</tr>
+<tr>
+<td>全文索引</td>
+<td>全文索引查找的是文本中的关键词，而不是比较索引中的值</td>
+<td>可以有多个</td>
+<td>fulltext</td>
+</tr>
+<tr>
+<td>联合索引</td>
+<td>一个节点中的key有多个，按照顺序排列</td>
+<td>要遵循最左前缀法则</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>在 InnoDB 引擎中，根据索引的存储形式，又可以分为两种：</p>
+<ul>
+<li>聚集索引（Clustered Index）：将数据存储与索引放到一块，<strong>索引结构的叶子节点保存了行数据</strong>。每张表必须有，且只有一个。</li>
+<li>二级索引（Secondary Index）：将数据存储与索引分开存储，<strong>索引结构的叶子节点关联的是对应主键</strong>。每张表中可以存在多个。</li>
+</ul>
+<p>从二级索引上选取出来的是主键值，选取到主键值之后会再次从聚集索引里面对比，选出最终的行数据。这种查询，称为“回表查询”。</p>
+<p>聚集索引的选取规则：</p>
+<ol>
+<li>如果存在主键，主键索引就是聚集索引。</li>
+<li>如果没有主键，则使用第一个唯一索引作为聚集索引。</li>
+<li>如果表没有主键，也没有合适的唯一索引，则 InnoDB 会自动生成一个 rowid 作为隐藏的聚集索引。</li>
+</ol>
+<h4 id="索引语法"><a href="#索引语法" class="headerlink" title="索引语法"></a>索引语法</h4><p>创建索引：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE [UNIQUE | FULLTEXT] INDEX index_name ON table_name (index_col_name, ...);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>查看索引：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SHOW INDEX FROM table_name;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>删除索引：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DROP INDEX index_name ON table_name;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>示例：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 查看表索引
+show index from te_user;
+
+# 为name字段创建常规索引
+create index idx_user_name on te_user(name);
+
+# 为phone字段创建唯一索引
+create unique index idx_user_phone on te_user(phone);
+
+# 为剩余字段创建联合索引
+create index idx_user_age_address_date on te_user(age, address, date);
+
+# 删除索引
+drop index idx_user_age_address_date on te_user;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="SQL-性能分析"><a href="#SQL-性能分析" class="headerlink" title="SQL 性能分析"></a>SQL 性能分析</h4><p>通过下述语句可以查看当前数据库的CRUD使用频次：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SHOW GLOBAL STATUS LIKE 'Com_______';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果发现一个数据库中查询语句的执行频率相当高，则我们有必要为这个数据库进行索引优化。</p>
+<h5 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h5><p>慢查询日志记录了所有执行时间超过指定参数（long_query_time，单位：秒，默认 10 秒）的所有 SQL 语句的日志。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 查看慢日志查询是否开启
+show variables like 'slow_query_log';
+
+# 设置慢查询日志的默认时间
+set global long_query_time = 1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="profile-详情"><a href="#profile-详情" class="headerlink" title="profile 详情"></a>profile 详情</h5><p>show profies 能够在做 SQL 优化的时候帮助我们了解时间都耗费在哪里。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 查询当前数据库是否支持profiles
+select @@have_profiling;
+
+# 查看是否开启profile
+select @@profiling;
+
+# 开启profiling
+set profiling = 1;
+
+# 查看所有sql语句耗时情况
+show profiles;
+
+# 查看指定query_id的sql语句各个阶段的耗时情况
+show profile for query 77;
+
+# 查看指定query_id的sql语句各个阶段的cpu耗时情况
+show profile cpu for query  77;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="explain-执行计划"><a href="#explain-执行计划" class="headerlink" title="explain 执行计划"></a>explain 执行计划</h5><p>在任意 select 语句前加上 <code>explain</code> 关键字可以进行执行计划的查看，例如：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">explain select * from te_user;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>执行计划查询出来后，每一列的对应意义：</p>
+<ul>
+<li>id：表示 select 查询的序列号，表示查询中执行 select 子句或者是操作表的顺序（id 相同，执行顺序从上到下，id 不同，值越大，越先执行）。</li>
+<li>select_type：表明当前 sql 语句的查询类型。</li>
+<li>type：表示连接类型，<mark>性能由好到差为 NULL、system、const、eq_ref、ref、range、index、all。</mark>当访问系统表时会出现 system、当使用主键或唯一键查询时会出现 const、当使用非唯一性索引进行查询时会出现 ref、当使用全表扫描时会出现 all。</li>
+<li>possible_key：显示可能应用在这张表上的索引，一个或多个。</li>
+<li>key：显示实际用到的索引，如果没有展示 NULL。</li>
+<li>key_len：表示索引中使用的字节数，是可能的最大长度，并非实际使用长度，在不损失精确性的前提下，长度越短越好。</li>
+<li>rows：是一个估计值，表示要执行查询的行数。</li>
+<li>filtered：表示返回结果的行数占需要读取行数的百分比，越大越好。</li>
+<li>extra：表示额外的信息。</li>
+</ul>
+<h4 id="使用规则"><a href="#使用规则" class="headerlink" title="使用规则"></a>使用规则</h4><p><strong>最左前缀法则</strong>：如果索引了多列，要遵循最左索引法则。指的是查询从索引的最左列开始，并且不跳过索引中的列，如果跳过某一列，索引将部分失效（后面的字段索引失效）。</p>
+<p>范围查询：联合索引中，出现范围查询，范围查询右侧的列将失效。</p>
+<p>索引列运算：不要在索引列上进行运算操作，否则索引将失败。</p>
+<p>字符串不加引号：字符串类型字段使用时，不加引号，索引会失效。</p>
+<p>模糊查询：尾部模糊查询不会失效，头部模糊查询则会导致索引失效。</p>
+<p><code>or</code> 连接的条件：如果其中一个条件没有使用索引，则会导致<strong>全部</strong>索引失效。</p>
+<p>数据分布影响：如果 MySQL 评估觉得走索引更慢，那 MySQL 会进行全表扫描。</p>
+<p>SQL 提示：是优化数据库的一种手段，就是在数据库中加入人为提示来做到优化操作的目的，例子如下：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 建议sql使用索引，sql不一定接受你的建议
+explain select * from te_user use index (idx_user_age_date_address) where age = 18;
+
+# 提示sql禁用索引
+explain select * from te_user ignore index (idx_user_age_date_address) where age = 18;
+
+# 强制sql使用索引
+explain select * from te_user force index (idx_user_age_date_address) where age = 18;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>覆盖索引：尽量使用覆盖索引（查询使用了索引，并且需要返回的列在该索引中可以找到，避免回表查询）。</p>
+<p>前缀索引：当字段类型为字符串时，有时需要索引很长的字符串，这会让索引变得非常大，查询时很浪费磁盘 IO，影响效率。此时可以只提取字符串的一部分前缀建立索引，可以大大节省磁盘空间，从而提高索引效率。前缀索引语法：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 提取字符串前n个字符建立索引
+CREATE INDEX idx_name ON table_name(COLUMN);
+
+# 可以根据选择性来决定前缀的长度
+# 选择性是指不重复的索引值和数据表的记录总数的比值，索引选择性越高则查询效率越高(区分度高)
+# 唯一索引的选择性是1，是最好的索引选择性，性能也是最好的
+
+# 根据下述公式求取索引的选择性
+select count(distinct 字段名) / count(*) from 表名;
+select count(distinct substring(字段名, 起始, 终止)) / count(*) from 表名;
+
+# 增加前缀索引
+create index idx_user_address_3 on te_user(address(3));<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>单列索引和联合索引：在业务场景中，如果存在多个查询条件，考虑使用联合索引而非单列索引，考虑到最左前缀法则，我们可以把较常用的字段放左侧。</p>
+<h4 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h4><ol>
+<li>对于数据量较大（<strong>超过100多万的数据</strong>），且查询比较频繁的表建立索引。</li>
+<li>针对于常作为查询条件（where）、排序（order by）、分组（group by）操作的字段建立索引。</li>
+<li>尽量选择区分度高的列作为索引，<strong>尽量建立唯一索引</strong>，区分度越高，使用索引的效率越高。</li>
+<li>如果是字符串类型的字段，字段的长度较长，可以针对于字段的特点，建立前缀索引。</li>
+<li><strong>尽量使用联合索引</strong>，减少单列索引，查询时，联合索引很多时候可以覆盖索引，节省存储空间，避免回表，提高查询效率。</li>
+<li>要控制索引的数量，索引并不是多多益善，索引越多，维护索引结构的代价也就越大，会影响增删改的效率。</li>
+<li>如果索引列不能存储 NULL 值，请在创建表时使用 NOTNULL 约束它。当优化器知道每列是否包含 NULL 值时，它可以更好地确定哪个索引最有效地用于查询。</li>
+</ol>
+<h3 id="SQL-优化"><a href="#SQL-优化" class="headerlink" title="SQL 优化"></a>SQL 优化</h3><h4 id="主键优化"><a href="#主键优化" class="headerlink" title="主键优化"></a>主键优化</h4><p>在 InnoDB 存储引擎中，表数据都是根据主键顺序组织存放的，这种存储方式的表称为索引组织表（IOT，index organized table）。B+ 树中的节点存放在“页”里，页可以为空，也可以填充一半，也可以全部填充。每个页包含了 2-N 行数据（如果一行数据过大，会行溢出），根据主键顺序排列。</p>
+<p>如果主键是乱序插入，会扰乱原来已排序好的页，MySQL 会通过新建页并调整原来已经存放在页中的数据来达到维护主键有序的效果，这便是<strong>页分裂</strong>。</p>
+<p>当删除一行记录时，实际上并没有直接进行物理删除，而是将数据标记成可以被覆盖的状态，允许这个数据被其他数据声明使用。当删除的数据达到一定阈值（merge_threshold，可以自己设置，默认为页的50%）后，MySQL 会查看相邻的两页是否有合并的可能，如果有，则合并相邻两页以节省空间，此之谓<strong>页合并</strong>。</p>
+<p>故最终，我们可以得出主键的设计原则：</p>
+<ol>
+<li>满足业务要求的情况下，尽量降低主键的长度，降低占用的磁盘空间和节省搜索时的磁盘 IO。</li>
+<li>插入数据时尽量选择顺序插入，选择使用自增主键。</li>
+<li>尽量不要使用 UUID 做主键或者时其他自然主键，如身份证号，节省主键长度并避免出现页分裂的情况。</li>
+<li>在业务操作时尽量避免对主键进行修改，因为修改主键会牵动索引结构，修改成本高。</li>
+</ol>
+<h4 id="insert-优化"><a href="#insert-优化" class="headerlink" title="insert 优化"></a>insert 优化</h4><p>对于小批量数据的插入，可以优化的地方如下：</p>
+<ol>
+<li>尽量批量插入数据，减少与数据库建立连接进行传输的次数，并且尽量保证一次插入的数据量在<strong>1000条以下</strong>，如果数据量过大，建议使用多次批量插入。</li>
+<li>使用手动提交事务，在默认的自动提交事务前提下，insert 语句插入数据前后需要开启和提交事务，比较耗时，使用手动提交可以避免耗时操作。</li>
+<li>按照主键顺序插入，乱序插入的效率比顺序插入要低。</li>
+</ol>
+<p>对于大批量数据的插入，使用 insert 语句性能降低，这个时候建议采用 MySQL 数据库提供的 <strong>Load 指令</strong>进行插入，将本地数据加载到数据库当中。操作如下：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 客户端连接服务器时，加上参数 --local -infile
+mysql --local-infile -u root -p
+
+# 设置全局参数local_infile为1，开启从本地加载文件导入数据的开关
+set global local_infile = 1;
+
+# 查看默认开关是否开启
+select @@local_infile;
+
+# 执行load指令将准备好的数据加载到表结构中
+load data 
+	local infile 文件路径
+	into table 表名
+	fields terminated by 字段分隔符
+	lines terminated by 行分隔符;
+
+# 假设本地test.sql文件中格式为：12,testName12,20,2024-01-27,湖南长沙,13829978811
+# 对于本地.sql文件的数据插入命令如下
+load data 
+	local infile 'D:/HNU/test.sql'
+	into table te_user
+	fields terminated by ','
+	lines terminated by '\n';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="order-by-优化"><a href="#order-by-优化" class="headerlink" title="order by 优化"></a>order by 优化</h4><p>MySQL 有两种排序方式，为：</p>
+<ol>
+<li>Using filesort：通过表的索引或全表扫描，读取满足条件的数据行，然后在排序缓冲区sort buffer中完成排序操作，所有不是通过索引直接返回排序结果的排序都叫 FileSort 排序。</li>
+<li>Using index：通过有序索引顺序扫描直接返回有序数据，这种情况即为 using index，不需要额外排序，操作效率高。<strong>故我们在优化 order by 时尽量优化为 using index 排序方式。</strong></li>
+</ol>
+<p>可以在创建索引的时候指定索引的排序方式：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">create index idx_name on table_name(字段名1 asc, 字段名2 desc);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>order by 的优化原则：</p>
+<ol>
+<li>根据排序字段建立合适的索引，多字段排序时，也遵循最左前缀法则。</li>
+<li>尽量使用覆盖索引。</li>
+<li>多字段排序，一个升序一个降序，此时要注意联合索引在创建时的规则。</li>
+<li>如果不可避免的出现 filesort，大数据量排序时，可以适当增大排序缓冲区大小 sort_buffer_size（默认256K）。</li>
+</ol>
+<h4 id="group-by-优化"><a href="#group-by-优化" class="headerlink" title="group by 优化"></a>group by 优化</h4><p>在分组操作的时候，建立适当的索引使得分组时可以利用索引以提高效率。分组时索引的使用也需要满足最左前缀法则。</p>
+<h4 id="limit-优化"><a href="#limit-优化" class="headerlink" title="limit 优化"></a>limit 优化</h4><p>limit 在大数据量的分页时越往后所需时间越长，因为 limit 底层默认走的是全表扫描。官方给出的优化方案是通过覆盖索引和子查询的方式提高 limit 的分页效率。</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 先拿到id
+select id from te_user order by id limit 10, 10;
+
+# 再查询id对应的行数据，mysql不支持in后跟limit，所以这里使用多表查询
+select
+    t.*
+from
+    te_user t,
+    (
+        select id from te_user order by  id limit 10, 10
+    ) tmp
+where
+    t.id = tmp.id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上述方案使用了多表查询对 limit 语句进行优化。实际上，如果 limit 语句使用了 where 子句，可以在 where 子句所涉及到的字段添加索引，可以有效提高查询效率。</p>
+<h4 id="count-优化"><a href="#count-优化" class="headerlink" title="count 优化"></a>count 优化</h4><p>MyISAM 引擎把一个表的总行数存在磁盘上，因此执行 <code>count(*)</code> 的时候会直接返回一个数，效率很高（但是前提是没有 where 条件，即查询的是总数）。</p>
+<p><strong>针对 InnoDB 引擎的 <code>count</code> 函数，我们没有一个非常好的优化方案，只能自己计数。</strong></p>
+<p><code>count</code>是一个聚合函数，对于返回的结果，一行一行地判断，<strong>如果参数不是 NULL，累计值就 +1，否则不加</strong>，最后返回累计值。<code>count</code>的用法有以下几种：</p>
+<ul>
+<li><code>count(*)</code>：求取表中的总记录数。InnoDB 引擎并不会把全部字段取出来，而是专门做了优化，不取值，服务层直接进行按行累加。</li>
+<li><code>count(主键)</code>：求取主键个数。InnoDB 会遍历整张表，把每一行的主键 id 拿出来返回给服务层。服务层拿到主键后，直接进行累加（因为主键不为 NULL，所以直接加）。</li>
+<li><code>count(字段)</code>：求取值不为 NULL 的该字段个数。与上述不同的是，如果该字段没有 <code>not null</code> 约束，则还需多一步判断是否为 NULL 的操作。如果有<code>not null</code>约束，则与上述相同。</li>
+<li><code>count(1)</code>：查询出来的记录都会放一个1进去，最后在服务层进行累加。（实际上你可以传递任何数字进去）。</li>
+</ul>
+<p>所以，相对来讲，如果要记录总数，<code>count(*)</code>的效率是最高的（<code>count(1)</code>的效率与其一致）。</p>
+<h4 id="update-优化"><a href="#update-优化" class="headerlink" title="update 优化"></a>update 优化</h4><p>MySQL 的事务是<strong>行级锁</strong>。意味着对于索引，上的是行锁，当我们根据具有索引的字段更新本行数据的时候，如果并发更新其他行的数据，是可以成功更新的。但是，对于非索引数据，MySQL 上的是表锁，意味着当我们根据没有索引的字段更新本行数据的时候，如果并发更新其他行的数据，是无法成功更新的，因为此时整个表都锁住了。</p>
+<p>故我们使用 update 的时候，<strong>需要根据索引字段进行更新</strong>，否则就会出现行锁升级为表锁的情况，锁住整张表，降低并发性能。值得一提的是，InnoDB 引擎的行锁是针对索引加的锁，不是针对记录加的锁，并且该索引不能失效，否则会从行锁升级为表锁。</p>
+<h3 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h3><p>视图（View）是一种虚拟存在的表，视图中的数据并不在数据库中实际存在，行和列数据来自定义视图的查询中使用的表，并且是在使用视图时<strong>动态生成</strong>的。</p>
+<p>通俗地讲，视图不保存查询结果，只保存查询的 SQL 逻辑。所以我们在创建视图的时候，主要的工作就落在创建这条 SQL 查询语句上。也可以理解为，每次进行查询工作，都需要编写查询代码进行查询，而视图的作用就是不必每次都重新编写查询的SQL代码，而是通过视图直接查询即可。</p>
+<h4 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h4><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 创建语法(与修改语法一致，修改时or replace要加)
+CREATE [OR REPLACE] VIEW 视图名称[(列名列表)] AS SELECT语句 [WITH [CASCADED | LOCAL] CHECK OPTION];
+
+# 查询语法
+# 查看创建视图的sql语句
+SHOW CREATE VIEW 视图名称;
+# 查看视图数据
+SELECT * FROM 视图名称;
+
+# 另一种修改语法
+ALTER VIEW 视图名称[(列名列表)] AS SELECT语句 [WITH [CASCADED | LOCAL] CHECK OPTION];
+
+# 删除视图
+DROP VIEW [IF EXISTS] 视图名称;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>示例：</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 创建视图
+create view user_v1 as select id, name from te_user where id &lt;= 10;
+
+# 查询视图
+show create view user_v1;
+
+# 查询视图数据
+select * from user_v1;
+
+# 修改视图
+# create or replace view user_v1 as select id, name from te_user where id &gt;= 10;
+alter view user_v1 as select id, name from te_user where id &gt;= 10;
+
+# 删除视图
+drop view user_v1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="检查选项（cascaded）"><a href="#检查选项（cascaded）" class="headerlink" title="检查选项（cascaded）"></a>检查选项（cascaded）</h4>
                 
             </div>
             <hr/>
@@ -2010,7 +2498,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">167.6k</span>&nbsp;字
+                class="white-color">173.1k</span>&nbsp;字
             
             
             
