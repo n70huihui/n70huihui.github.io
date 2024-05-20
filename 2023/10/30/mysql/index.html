@@ -452,7 +452,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-03-02
+                    2024-04-13
                 </div>
                 
 
@@ -1106,6 +1106,10 @@
 <td><code>datediff(date1, date2)</code></td>
 <td>返回起始时间 date1 和结束时间 date2 之间的天数</td>
 </tr>
+<tr>
+<td><code>date_format(date, format)</code></td>
+<td>指定日期格式</td>
+</tr>
 </tbody></table>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">insert</span> <span class="token keyword">into</span> te_user <span class="token keyword">values</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">'testName0'</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token string">'2023-11-21'</span><span class="token punctuation">,</span> <span class="token string">'湖南长沙'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
                         <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'testName1'</span><span class="token punctuation">,</span> <span class="token number">19</span><span class="token punctuation">,</span> <span class="token string">'2023-11-22'</span><span class="token punctuation">,</span> <span class="token string">'湖南娄底'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
@@ -1355,6 +1359,7 @@
 
 <p>如果是 union all，是直接将两个结果合并。如果只是 union，则会有去重的操作。</p>
 <p>union 需要保证查询出来的两个结果<strong>有相同的列数</strong>和<strong>相同的类型</strong>。否则无法执行。</p>
+<p><strong>除此之外还有 intersect 进行集合的交运算，except 进行集合的差运算。</strong></p>
 <h4 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h4><p>所谓子查询，指 SQL 语句中<strong>嵌套 select</strong> 语句，称为嵌套查询，又称子查询。</p>
 <p>语法：<code>select * from t1 where column1 = (select column1 from t2);</code></p>
 <p>子查询外部的语句可以是 insert / update / delete / select 中的任何一个。</p>
@@ -1465,34 +1470,34 @@
 
 <h3 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h3><p>聚合函数将同一个分组内的多行数据汇总成单个结果，窗口函数则保留了所有的原始数据。<strong>窗口函数一般用在处理排名问题（每个部门的薪资排名）和 TOPN 问题（查每个部门的排名第一）中。</strong></p>
 <p>窗口函数语法：</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">window_function([expression]) over (
-    partition by...
-    order by...
-)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">window_function<span class="token punctuation">(</span><span class="token punctuation">[</span>expression<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">over</span> <span class="token punctuation">(</span>
+    <span class="token keyword">partition</span> <span class="token keyword">by</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">order</span> <span class="token keyword">by</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>其中 window_function 是窗口函数的名称，expression 是可选的分析对象（字段名或者表达式），over 子句包含分区（partition by）、排序（order by）以及窗口大小（frame_clause）3个选项。</p>
 <p><strong>创建数据分区</strong></p>
 <p>例如，以下语句按照不同部门分别统计员工的月薪合计（类似于 group by）：</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select
-	emp_name,
-	salary,
-	dept_id,
-	sum(salary) over (
-    	partition by dept_id
-    )
-from emp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span>
+	emp_name<span class="token punctuation">,</span>
+	salary<span class="token punctuation">,</span>
+	dept_id<span class="token punctuation">,</span>
+	<span class="token function">sum</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token keyword">over</span> <span class="token punctuation">(</span>
+    	<span class="token keyword">partition</span> <span class="token keyword">by</span> dept_id
+    <span class="token punctuation">)</span>
+<span class="token keyword">from</span> emp<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>分区内排序</strong></p>
 <p>排序选项通常用于数据的分类排名，例如以下语句用于分析员工在部门内的月薪排名：</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select
-	emp_name,
-	salary,
-	dept_id,
-	sum(salary) over (
-    	partition by dept_id
-        order by salary desc
-    )
-from emp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span>
+	emp_name<span class="token punctuation">,</span>
+	salary<span class="token punctuation">,</span>
+	dept_id<span class="token punctuation">,</span>
+	<span class="token function">sum</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token keyword">over</span> <span class="token punctuation">(</span>
+    	<span class="token keyword">partition</span> <span class="token keyword">by</span> dept_id
+        <span class="token keyword">order</span> <span class="token keyword">by</span> salary <span class="token keyword">desc</span>
+    <span class="token punctuation">)</span>
+<span class="token keyword">from</span> emp<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>序号函数（常用）</strong></p>
 <table>
@@ -3733,7 +3738,7 @@ server<span class="token operator">-</span>id <span class="token operator">=</sp
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">227.7k</span>&nbsp;字
+                class="white-color">272.2k</span>&nbsp;字
             
             
             
@@ -3999,7 +4004,7 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/22.2017.summer.normal.2.model.json"},"display":{"position":"left","width":225,"height":450},"mobile":{"show":true},"log":false});</script>
         <style>
             [bg-lazy] {
                 background-image: none !important;
@@ -4012,6 +4017,6 @@ $(function () {
                 preloadRatio: 1,
                 processImages: null,
             };
-        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,c=(r.imageLazyLoadSetting.preloadRatio,n());function n(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=n());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight+240||document.documentElement.clientHeight+240)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),r.addEventListener("resize",a),r.addEventListener("orientationchange",a)}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/22.2017.summer.normal.2.model.json"},"display":{"position":"left","width":225,"height":450},"mobile":{"show":true},"log":false});</script></body>
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,c=(r.imageLazyLoadSetting.preloadRatio,n());function n(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=n());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight+240||document.documentElement.clientHeight+240)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function a(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",a),r.addEventListener("resize",a),r.addEventListener("orientationchange",a)}(this);</script></body>
 
 </html>
