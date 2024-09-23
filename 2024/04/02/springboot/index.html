@@ -456,21 +456,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-08-12
+                    2024-09-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    24.7k
+                    25k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    106 分
+                    108 分
                 </div>
                 
 
@@ -2164,6 +2164,71 @@ http://localhost:8080/pic/
     <span class="token comment">// 上述异常处理只是一个演示，是不规范的，规范处理需要使用ProblemDetail</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>完整异常处理简单示例如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 处理BeanValidation异常，用于@RequestBody校验失败的情况
+ * @param e MethodArgumentNotValidException
+ * @return 响应字段异常信息
+ */</span>
+<span class="token annotation punctuation">@ExceptionHandler</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token class-name">MethodArgumentNotValidException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> <span class="token function">handlerMethodArgumentNotValidException</span><span class="token punctuation">(</span><span class="token class-name">MethodArgumentNotValidException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">StringBuilder</span> builder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">BindingResult</span> bindingResult <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">getBindingResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bindingResult<span class="token punctuation">.</span><span class="token function">hasErrors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        bindingResult<span class="token punctuation">.</span><span class="token function">getFieldErrors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>fieldError <span class="token operator">-&gt;</span>
+            builder<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>fieldError<span class="token punctuation">.</span><span class="token function">getField</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">": "</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>fieldError<span class="token punctuation">.</span><span class="token function">getDefaultMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">";\n"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>builder<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * 处理BeanValidation异常，用于@RequestParam、@PathVariable校验失败的情况
+ * @param ex ConstraintViolationException
+ * @return 响应字段异常信息
+ */</span>
+<span class="token annotation punctuation">@ExceptionHandler</span><span class="token punctuation">(</span><span class="token class-name">ConstraintViolationException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> <span class="token function">handleConstraintViolationException</span><span class="token punctuation">(</span><span class="token class-name">ConstraintViolationException</span> ex<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">StringBuilder</span> builder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ex<span class="token punctuation">.</span><span class="token function">getConstraintViolations</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>violation <span class="token operator">-&gt;</span> <span class="token punctuation">{</span>
+        <span class="token class-name">String</span> fieldName <span class="token operator">=</span> violation<span class="token punctuation">.</span><span class="token function">getPropertyPath</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> errorMessage <span class="token operator">=</span> violation<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        builder<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>fieldName<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">": "</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>errorMessage<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">";\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>builder<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * 处理BeanValidation异常，用于处理在表单或@RequestParam参数的绑定过程中，格式校验失败的场景。
+ * @param e BindException
+ * @return 响应字段异常信息
+ */</span>
+<span class="token annotation punctuation">@ExceptionHandler</span><span class="token punctuation">(</span><span class="token class-name">BindException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> <span class="token function">handleBindException</span><span class="token punctuation">(</span><span class="token class-name">BindException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">StringBuilder</span> builder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    e<span class="token punctuation">.</span><span class="token function">getBindingResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getFieldErrors</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>fieldError <span class="token operator">-&gt;</span>
+        builder<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>fieldError<span class="token punctuation">.</span><span class="token function">getField</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">": "</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>fieldError<span class="token punctuation">.</span><span class="token function">getDefaultMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">";\n"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>builder<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * 处理BeanValidation异常，用于处理当请求中的参数类型与方法参数的期望类型不匹配的情况
+ * @param e MethodArgumentTypeMismatchException
+ * @return 响应异常字段信息
+ */</span>
+<span class="token annotation punctuation">@ExceptionHandler</span><span class="token punctuation">(</span><span class="token class-name">MethodArgumentTypeMismatchException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> <span class="token function">handleMethodArgumentTypeMismatchException</span><span class="token punctuation">(</span><span class="token class-name">MethodArgumentTypeMismatchException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">StringBuilder</span> builder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    builder<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"参数: "</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">" 类型不匹配, 期待类型: "</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span><span class="token function">getRequiredType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">", 实际输入: "</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">";\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>builder<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h4 id="ProblemDetail"><a href="#ProblemDetail" class="headerlink" title="ProblemDetail"></a>ProblemDetail</h4><p>如果不作特定的异常处理，SpringBoot 也有默认的异常反馈，但是默认的异常反馈内容比较单一，包含 Http Status Code，时间，异常信息。但具体异常原因没有体现。这次 SpringBoot3 对错误信息增强了，使用的类是 ProblemDetail。</p>
 <table>
 <thead>
@@ -2707,7 +2772,7 @@ id3 --生成Native Image文件--&gt; id2</pre>
 <td>用在方法上，说明方法的用途、作用</td>
 </tr>
 </tbody></table>
-<h2 id="HttpClient"><a href="#HttpClient" class="headerlink" title="HttpClient"></a>HttpClient</h2><p>HttpClient 是Apache Jakarta Common 下的子项目，可以用来提供高效的、最新的、功能丰富的支持 HTTP 协议的客户端编程工具包，并且它支持 HTTP 协议最新的版本和建议。</p>
+<h2 id="HttpClient"><a href="#HttpClient" class="headerlink" title="HttpClient"></a>HttpClient</h2><p>HttpClient 是 Apache Jakarta Common 下的子项目，可以用来提供高效的、最新的、功能丰富的支持 HTTP 协议的客户端编程工具包，并且它支持 HTTP 协议最新的版本和建议。</p>
 <p>要使用需要导入依赖（阿里云的 OSS 中封装了这个依赖，如果项目中有使用阿里云 OSS 服务，那么可以不用导入）：</p>
 <pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.apache.httpcomponents<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
@@ -4682,7 +4747,7 @@ spEL的语法比较灵活，上述key也可以写成:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">344.6k</span>&nbsp;字
+                class="white-color">372.9k</span>&nbsp;字
             
             
             
