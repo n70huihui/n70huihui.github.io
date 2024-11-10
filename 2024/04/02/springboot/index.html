@@ -456,21 +456,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-09-19
+                    2024-10-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    25k
+                    25.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    108 分
+                    109 分
                 </div>
                 
 
@@ -1307,6 +1307,10 @@ http://localhost:8080/pic/
 
 <h3 id="BeanValidation"><a href="#BeanValidation" class="headerlink" title="BeanValidation"></a>BeanValidation</h3><p>服务器端程序，Controller 在方法接受了参数，这些参数是由用户提供的，使用之前必须校验参数是我们需要的吗，值是否在允许的范围内，是否符合业务的要求。</p>
 <p>BeanValidation 是提供数据验证 JSR-303 的一个子规范，为 JavaBean 验证定义了相应的元数据模型和 API，其中，hibernate-validator 是一个比较有名的实现。</p>
+<ul>
+<li>@Valid：适用于 <code>@RequestBody</code> 参数，可以用于参数级别、属性级别和方法返回值的校验。</li>
+<li>@Validated：Spring 提供的注解，用于控制器类或方法参数上，用于校验路径变量和请求参数（如 <code>@RequestParam</code> 的场景）。</li>
+</ul>
 <p>BeanValidation 内置的 Constraint：</p>
 <table>
 <thead>
@@ -2114,6 +2118,48 @@ http://localhost:8080/pic/
     <span class="token punctuation">}</span>
     
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="Tomcat-异常处理"><a href="#Tomcat-异常处理" class="headerlink" title="Tomcat 异常处理"></a>Tomcat 异常处理</h4><p>上述介绍的 <mark>@ExceptionHandler 只能解决控制器方法抛出的异常（连带 Service 和 Dao 层也算），对于非控制器抛出的异常，@ExceptionHandler 无能为力</mark>。（类似于 Filter 抛出的异常，此时 @ExceptionHandler 就无能为力了，因为 @ExceptionHandler 是控制器处理请求的阶段，而 Filter 的过滤阶段比其更早）所以，我们需要一个更上层的异常处理器，来帮助我们捕获并处理这些异常。</p>
+<p>使用 BasicErrorController 来返回异常信息：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyBasicErrorController</span> <span class="token keyword">extends</span> <span class="token class-name">BasicErrorController</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">MyBasicErrorController</span><span class="token punctuation">(</span><span class="token class-name">ErrorAttributes</span> errorAttributes<span class="token punctuation">,</span>
+                                  <span class="token class-name">ErrorProperties</span> errorProperties<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>errorAttributes<span class="token punctuation">,</span> errorProperties<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">ResponseEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token function">error</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"重写了error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> body <span class="token operator">=</span> <span class="token function">getErrorAttributes</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> <span class="token function">getErrorAttributeOptions</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> <span class="token class-name">MediaType</span><span class="token punctuation">.</span><span class="token constant">ALL</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> message <span class="token operator">=</span> body<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"error"</span><span class="token punctuation">)</span>
+                        <span class="token operator">+</span> <span class="token string">" in path: "</span> <span class="token operator">+</span> body<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"path"</span><span class="token punctuation">)</span>
+                        <span class="token operator">+</span> <span class="token string">", exception: "</span> <span class="token operator">+</span> body<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"exception"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">ObjectMapper</span> objectMapper <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectMapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> error <span class="token operator">=</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> result <span class="token operator">=</span> objectMapper<span class="token punctuation">.</span><span class="token function">convertValue</span><span class="token punctuation">(</span>error<span class="token punctuation">,</span> <span class="token class-name">Map</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ResponseEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token function">getStatus</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后，注册到 WebConfig 当中：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebConfig</span> <span class="token keyword">implements</span> <span class="token class-name">WebMvcConfigurer</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 使用BasicErrorController捕获Tomcat异常</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">MyBasicErrorController</span> <span class="token function">basicErrorController</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">ErrorProperties</span> errorProperties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ErrorProperties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        errorProperties<span class="token punctuation">.</span><span class="token function">setIncludeException</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 包含异常信息</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">MyBasicErrorController</span><span class="token punctuation">(</span>
+            <span class="token keyword">new</span> <span class="token class-name">DefaultErrorAttributes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                errorProperties
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="BeanValidation-异常处理"><a href="#BeanValidation-异常处理" class="headerlink" title="BeanValidation 异常处理"></a>BeanValidation 异常处理</h4><p>使用 JSR-303 验证参数时，我们是在 Controller 方法，声明 BindingResul 对象获取校验结果。Controller 的方法很多，每个方法都加入 BindingResult 处理检验参数比较繁琐。校验参数失败抛出异常给框架，异常处理器能够捕获到 MethodArgumentNotValidException，它是 BindException 的子类。接下来我们演示一下如何利用异常处理器处理 BeanValidation 的异常</p>
 <p>准备 Order 类：</p>
@@ -4747,7 +4793,7 @@ spEL的语法比较灵活，上述key也可以写成:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">372.9k</span>&nbsp;字
+                class="white-color">401.1k</span>&nbsp;字
             
             
             
