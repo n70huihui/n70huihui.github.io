@@ -456,21 +456,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-10-27
+                    2024-11-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    25.3k
+                    25.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    109 分
+                    111 分
                 </div>
                 
 
@@ -863,6 +863,50 @@
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"功能增强完毕"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="注解配置切点"><a href="#注解配置切点" class="headerlink" title="注解配置切点"></a>注解配置切点</h4><p>在 Spring Boot 中使用 AOP 时，可以通过自定义注解来定义切点，进而实现特定的业务逻辑。下面是如何通过注解来进行切点配置的步骤：</p>
+<p>首先，需要定义一个自定义注解来标识需要切入的目标方法。比如，创建一个 <code>@LogExecutionTime</code> 注解：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">METHOD</span><span class="token punctuation">)</span>  <span class="token comment">// 该注解用于方法</span>
+<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>  <span class="token comment">// 运行时可用</span>
+<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">LogExecutionTime</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接着，创建一个切面类，该类中的方法可以作为通知（Advice）处理业务逻辑。可以在切面类中使用 <code>@Around</code> 或 <code>@Before</code>、<code>@After</code> 等注解来实现切点逻辑。</p>
+<p>在切面类中，使用 <code>@annotation</code> 来指定切点为标注了特定注解的方法。比如，使用 <code>@LogExecutionTime</code> 注解的方法：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Aspect</span>
+<span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LogExecutionTimeAspect</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Around</span><span class="token punctuation">(</span><span class="token string">"@annotation(com.example.demo.annotation.LogExecutionTime)"</span><span class="token punctuation">)</span>  <span class="token comment">// 切入点，指定注解类型</span>
+    <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">logExecutionTime</span><span class="token punctuation">(</span><span class="token class-name">ProceedingJoinPoint</span> joinPoint<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Throwable</span> <span class="token punctuation">{</span>
+        <span class="token keyword">long</span> start <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 记录方法开始时间</span>
+        <span class="token class-name">Object</span> proceed <span class="token operator">=</span> joinPoint<span class="token punctuation">.</span><span class="token function">proceed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 执行方法</span>
+        <span class="token keyword">long</span> executionTime <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">;</span>  <span class="token comment">// 计算方法执行时间</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>joinPoint<span class="token punctuation">.</span><span class="token function">getSignature</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" executed in "</span> <span class="token operator">+</span> executionTime <span class="token operator">+</span> <span class="token string">"ms"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> proceed<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后，在需要切入的目标方法上使用刚才创建的 <code>@LogExecutionTime</code> 注解：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyController</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@LogExecutionTime</span>  <span class="token comment">// 标注该方法需要切面处理</span>
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/test"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">testMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 业务逻辑</span>
+        <span class="token keyword">return</span> <span class="token string">"Hello, World!"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当然，需要确保在 Spring Boot 应用中启用了 AOP 支持：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableAspectJAutoProxy</span>  <span class="token comment">// 启用AOP</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DemoApplication</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">DemoApplication</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h2><p>启用 autoconfigure（自动配置），框架尝试猜测要使用的 Bean，从类路径中查找 <code>xxx.jar</code>，创建这个 jar 中某些需要的 Bean。例如我们使用 MyBatis 访问数据，从我们项目的类路径中寻找 <code>mybatis.jar</code>，进一步创建 SqlSessionFactory，还需要 DataSource 数据源对象，尝试连接数据。这些工作交给<code>XXXAutoConfiguration</code> 类，这些就是自动配置类。在 <code>spring-boot-autoconfigure-3.0.2.jar</code> 定义了很多的<code>XxXAutoConfiguration</code> 类。第三方框架的 starter 里面包含了自己的 <code>XXXAutoConfiguration</code>类。</p>
 <p>例如，在和 Mybatis 框架进行整合的时候，就提供了<code>MybatisAutoConfiguration</code>自动配置类，该类提供了<code>SqlSessionFactory</code>用于创建 SqlSession，还提供了<code>SqlSessionTemplate</code>用于执行 sql 语句，还有<code>MapperFactoryBean</code>用于创建 Dao 接口的代理对象。</p>
@@ -4784,7 +4828,7 @@ spEL的语法比较灵活，上述key也可以写成:
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023-2024</span>
+                <span id="year">2023-2025</span>
             
             <span id="year">2023</span>
             <a href="/about" target="_blank">热心市民灰灰</a>
@@ -4793,7 +4837,7 @@ spEL的语法比较灵活，上述key也可以写成:
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">401.1k</span>&nbsp;字
+                class="white-color">437.2k</span>&nbsp;字
             
             
             

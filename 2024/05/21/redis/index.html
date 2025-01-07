@@ -452,7 +452,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-07-24
+                    2024-11-11
                 </div>
                 
 
@@ -2947,7 +2947,7 @@ redis<span class="token punctuation">.</span><span class="token function">call</
 <p>解决方案有两种：</p>
 <ol>
 <li>多线程，使用多个线程去处理各个 socket，但是这样一来，上下文切换也是很会消耗资源的。</li>
-<li>另一种解决方案就是，只启用一个线程，监听所有 socket，服务端优先处理已经处理好数据的 socket。</li>
+<li>另一种解决方案就是，只启用一个线程，监听所有 socket（NIO 中的 Selector），服务端优先处理已经处理好数据的 socket。</li>
 </ol>
 <p>Linux 采用的是上述第二种解决方案。在 Linux 中，一切皆文件，Linux 中每一个文件都被文件描述符（File Descriptor，FD）关联着。<strong>IO 多路复用便是利用单线程同时监听多个 FD，并在某个 FD 可读、可写时得到通知，从而避免无效的等待，充分利用 CPU 资源。</strong></p>
 <p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8.png"></p>
@@ -3063,7 +3063,8 @@ redis<span class="token punctuation">.</span><span class="token function">call</
 <h4 id="信号驱动-IO"><a href="#信号驱动-IO" class="headerlink" title="信号驱动 IO"></a>信号驱动 IO</h4><p>信号驱动 IO 是与内核建立 SIGIO 的信号关联并设置回调，当内核有 FD 就绪时，会发出 SIGIO 信号通知用户，期间用户应用可以执行其它业务，无需阻塞等待：</p>
 <p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8IO.png"></p>
 <p>当有大量 IO 操作时，信号较多，SIGIO 处理函数不能及时处理可能导致信号队列溢出，部分信号丢失。而且内核空间与用户空间频繁的信号交互也会导致性能下降。</p>
-<h4 id="异步-IO"><a href="#异步-IO" class="headerlink" title="异步 IO"></a>异步 IO</h4><p>异步 IO 的整个过程都是非阻塞的，用户进程调用完异步 API 后就可以去做其它事情，内核等待数据就绪并拷贝到用户空间后才会递交信号，通知用户进程：</p>
+<h4 id="异步-IO"><a href="#异步-IO" class="headerlink" title="异步 IO"></a>异步 IO</h4><p>上述的阻塞 IO、非阻塞 IO、IO 多路复用均为同步（调用和获取结果都是同一个线程）。</p>
+<p><strong>异步 IO 的整个过程都是非阻塞的</strong>（不存在异步阻塞，异步阻塞这种说法是错误的），用户进程调用完异步 API 后就可以去做其它事情，内核等待数据就绪并拷贝到用户空间后才会递交信号，通知用户进程：</p>
 <p><img src="/medias/loading.gif" data-original="https://cdn.jsdelivr.net/gh/n70huihui/Blog_Photo/%E5%BC%82%E6%AD%A5IO.png"></p>
 <p>但是，在高并发情况下，异步 IO 因为其异步的性质，需要大量线程异步执行数据的处理，也是很消耗性能的。</p>
 <h4 id="Redis-网络模型"><a href="#Redis-网络模型" class="headerlink" title="Redis 网络模型"></a>Redis 网络模型</h4><p>Redis 到底是单线程还是多线程？</p>
@@ -3552,7 +3553,7 @@ redis<span class="token punctuation">.</span><span class="token function">call</
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023-2024</span>
+                <span id="year">2023-2025</span>
             
             <span id="year">2023</span>
             <a href="/about" target="_blank">热心市民灰灰</a>
@@ -3561,7 +3562,7 @@ redis<span class="token punctuation">.</span><span class="token function">call</
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">401.1k</span>&nbsp;字
+                class="white-color">437.2k</span>&nbsp;字
             
             
             
